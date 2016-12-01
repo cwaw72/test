@@ -1,0 +1,238 @@
+extends ./layout
+
+block data
+	-var test = "여행의 직구"
+
+block chat_list
+	+chat_list('p/2.jpg', 'username', 'preview', '오전10:23', 'p/2.jpg', '5')
+block chat_content_list
+	+chat_content_list_you('p/2.jpg','상대방' , '그냥있지', '오전12:01' )
+	+chat_content_list_me('뭐하냐', '오전12:00')
+	+chat_content_list_you('p/2.jpg','상대방' , '그냥있지', '오전12:01' )
+	+chat_content_list_me('뭐하냐', '오전12:00')
+	+chat_content_list_you('p/2.jpg','상대방' , '그냥있지', '오전12:01' )
+	+chat_content_list_you('p/2.jpg','상대방' , '그냥있지', '오전12:01' )
+	
+block request_mode_list
+	+request_mode_list(0 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
+	+request_mode_list(1 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
+	+request_mode_list(1 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
+block travel_mode_list
+	+travel_mode_list(0 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
+	+travel_mode_list(1 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
+// 커다란 이미지
+block main
+	.container(style='margin-top:30px')
+		br
+		#myCarousel.carousel.slide(data-ride='carousel', background-color='black;')
+			// Indicators
+			ol.carousel-indicators.carousel_indicators_top
+				li.active(data-target='#myCarousel', data-slide-to='0')
+				li(data-target='#myCarousel', data-slide-to='1')
+				li(data-target='#myCarousel', data-slide-to='2')
+				li(data-target='#myCarousel', data-slide-to='3')
+			// Wrapper for slides
+			.carousel-inner(role='listbox')
+				.item.active
+					img(src='p/1.jpg', alt='Chania', width='*', height='*', style='background-color:rgba( 0, 0, 0, 0.5 );')
+					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%; width:100%; height:100%;')
+						.text-center.carousel_top
+							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
+							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
+				.item
+					img(src='p/1.jpg', alt='Chania', width='*', height='*')
+					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%;width:100%; height:100%;')
+						.text-center.carousel_top
+							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
+							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
+				.item
+					img(src='p/1.jpg', alt='Flower')
+					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%;width:100%; height:100%;')
+						.text-center.carousel_top
+							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
+							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
+				.item
+					img(src='p/1.jpg', alt='Flower')
+					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%;width:100%; height:100%;')
+						.text-center.carousel_top
+							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
+							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
+			// Left and right controls
+			a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+				span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+				span.sr-only Previous
+			a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+				span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+				span.sr-only Next
+	//큰이미지 끝
+	
+	.visible-xs-block(style='margin-top:10px;')
+	// 검색창 만들꺼얌
+	.container(style='font-size:0px; text-align:center; background-color:white; padding:0px')
+		// 검색 창
+		form.form-inline.jun(style=' text-align:center; vertical-align: middle; display:inline-block; padding:0px; margin:0px;')
+			// 국가 선택
+			li.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);	height:100%')
+				button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%;')
+					| 전체 국가 
+					span.caret
+				ul.dropdown-menu(style='text-align:center; width:100%')
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold; ') 한국
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold') 북미
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold') 아시아
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold') 유럽
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold') 아프리카
+			li.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1); height:100%')
+				button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%; ')
+					| 만료일 
+					span.caret
+				ul.dropdown-menu(style='text-align:center; width:100%')
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold;') 7일 이내
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold;') 10일 이내
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold;') 30일 이내
+					li
+						input(type='date', name='enddate', min='2016-10-31', style='font-weight:bold; font-size:0.9rem;')
+			// 검색 form
+			input#itemanme.form-control.main_search.index_search_bar2(type='itemname', placeholder='상품명', style='')
+			// 검색하기 버튼
+			button.btn.btn-default.main_search.index_search_bar3(type='button', style='background-color:rgba(45, 159, 255, 1); color:white') 구매요청
+	.hidden-xs(style='margin-top:30px')
+	.visible-xs-block(style='margin-top:20px;')
+	
+	// 등록하기 창
+	.container(style='margin-top:30px; margin-bottom:30px')
+		.col-xs-6(style='margin-top:40px; background-color:white; text-align:center; display:inline-block;')
+			img.index_icon(src='p/2.png', alt='tlavler register')
+			p(style='margin-top:20px ; font-weight: bold; font-size:0.6rem')
+				| 구매자의 부탁을 들어주고, 
+				br
+				|					 여행자금을 모으세요!
+			button.btn.btn-primary.btn_jun.index_reg_btn_size(type='button', onclick="location.href='travel_reg'")	여행자 등록 
+		.col-xs-6(style='margin-top:40px; background-color:white; text-align:center;')
+			img.index_icon(src='p/3.png', alt='buyer register')
+			p(style='margin-top:20px; font-weight: bold;	font-size:0.6rem;')
+				| 저렴한 가격에 원하는 물건을
+				br
+				|					여행자에게 부탁하세요!
+			button.btn.btn-primary.btn_jun.index_reg_btn_size(type='button', style='', onclick="location.href='request_reg'")	구매요청 등록 
+	.hidden-xs(style='margin-top:40px')
+	//등록하는 창 끝
+	
+	// 이 달의 추천 상품
+	.container(style='margin-top:10px; position:relative; text-align:center')
+		br
+		#ad.carousel.slide(data-ride='carousel')
+			// Indicators
+			ol.carousel-indicators(style='display:none')
+				li.active(data-target='#ad', data-slide-to='0')
+				li(data-target='#ad', data-slide-to='1')
+				li(data-target='#ad', data-slide-to='2')
+				li(data-target='#ad', data-slide-to='3')
+			// Wrapper for slides
+			.carousel-inner(role='listbox', style='padding-bottom:30px')
+				img(src='./p/backg.png', alt='광고란', width='100%', height='100%', style='position:absolute; left:0%; top:0%;')
+				.item.active(style='height:100%')
+					div(style='position:relative; font-size:0.9rem; font-weight:bold; margin-top:10px')
+						p	이 달의 추천 상품 
+						button.btn.btn-primary.btn_jun.ad_p(type='button', style='font-size:0.7rem')	월별 테마 상품 더 보러 가기 
+					.recommend_item_array(style=' text-align:center ; ')
+						.col-md-3.col-xs-6
+							img(src='./p/s3.png', alt='1', width='80%', style='margin:5%; display:inline-block')
+						.col-md-3.col-xs-6
+							img(src='./p/s3.png', alt='2', width='80%', style='margin:5%; display:inline-block')
+						.col-md-3.col-xs-6
+							img(src='./p/s3.png', alt='3', width='80%', style='margin:5%; display:inline-block')
+						.col-md-3.col-xs-6
+							img(src='./p/s3.png', alt='4', width='80%', style='margin:5%; display:inline-block')
+			// Left and right controls
+			a.left.carousel-control(href='#ad', role='button', data-slide='prev')
+				span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+				span.sr-only Previous
+			a.right.carousel-control(href='#ad', role='button', data-slide='next')
+				span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+				span.sr-only Next
+	//이달의 추천 상품 끝
+	
+	// 사용 설명서
+	.container.hidden-xs(style='margin-top:30px')
+		br
+		#how_to_use.carousel.slide(data-ride='carousel', background-color='black;')
+			// Indicators
+			ol.carousel-indicators(style='top:32%; left:80%;')
+				li.active(data-target='#how_to_use', data-slide-to='0', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='1', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='2', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='3', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='4', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='5', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='6', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='7', style='width:30px')
+				li(data-target='#how_to_use', data-slide-to='8', style='width:30px')
+			// Wrapper for slides
+			.carousel-inner(role='listbox')
+				.item.active
+					img(src='p/how_to_use1.jpg', alt='Chania', width='*', height='*', style='background-color:rgba( 0, 0, 0, 0.5 );')
+				.item
+					img(src='p/how_to_use2.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use3.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use4.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use5.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use6.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use7.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use8.jpg', alt='Chania', width='*', height='*')
+				.item
+					img(src='p/how_to_use9.jpg', alt='Chania', width='*', height='*')
+			//
+				Left and right controls
+				<a class="left carousel-control" href="#how_to_use" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#how_to_use" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+				</a>
+	// /////////////사용설명서
+
+	// 이벤트 란 & 거래 진행 란
+	.container(style='text-align:center; margin-top:30px; margin-bottom:30px; background-color:rgba(238, 238, 238, 1)')
+		div(style='margin-top:30px')
+			.col-md-7
+				img(src='./p/c.png', alt='쿠폰지급', width='100%', style='position:relative')
+				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px;')	페이스북으로 초대하기 
+				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px; background-color:rgba(255,186,0,1);')	카카오톡으로 초대하기 
+				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px;')	이메일로 초대하기 
+				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s1.png);')
+					| 누적 
+					br
+					|	구매 건수
+					br
+					p(style='color:yellow') 5,234건
+				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s2.png); ')
+					| 3일 이내 
+					br
+					|	배송가능 여행자
+					br
+					p(style='color:yellow') 302명
+				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s3.png);')
+					| 평균 
+					br
+					|	배송 기간
+					br
+					p(style='color:yellow') 5.5일
+			.col-md-5
+				img(src='./p/e1.png', alt='여행자 등록', width='100%', style='position:relative')
