@@ -25,6 +25,7 @@ block main
 	// main context
 	.reg_main
 		.container.reg_main_inner(style='background-color:white; ')
+			input#input-image-2(name="inputdim1[]" type="file" multiple class="file-loading" accept="image/*")
 			br
 			p(style='text-align:center; font-size:2rem; font-weight:bold; color:rgba(0, 174, 239, 1);')	구매요청 등록 
 			p(style='text-align:center; font-size:1rem')	여행자에게 부탁할 물품을 등록하고 저렴하게 겟하세요!
@@ -144,7 +145,24 @@ block scripts
 			layoutTemplates: {main2: '{preview} ' +	' {remove}'},
 			allowedFileExtensions: ["jpg", "png", "gif"]
 			});
-			
+			$("#input-image-2").fileinput({
+					overwriteInitial: false,
+					maxFileSize: 1500,
+					showClose: false,
+					browseOnZoneClick: true,
+					showCaption: false,
+					removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+					uploadUrl: "/site/image-upload",
+			    allowedFileExtensions: ["jpg", "png", "gif"],
+			    maxImageHeight: 150,
+			    maxFileCount: 3,
+			    resizeImage: true
+			}).on('filepreupload', function() {
+			    $('#kv-success-box').html('');
+			}).on('fileuploaded', function(event, data) {
+			    $('#kv-success-box').append(data.response.link);
+			    $('#kv-success-modal').modal('show');
+			});
 			$(function () {
 				$('#end_datetimepicker1').datetimepicker();
 			});

@@ -37,6 +37,18 @@ app.get('/', function(req, res){
     res.render('index', {time:Date(), title:'Jade'});
 });
 
+app.get('/travel_info', function(req, res){
+    res.render('dealing', {time:Date(), title:'Jade'});
+});
+
+app.get('/dealing', function(req, res){
+    res.render('dealing', {time:Date(), title:'Jade'});
+});
+
+app.get('/request_info', function(req, res){
+    res.render('request_info', {time:Date(), title:'Jade'});
+});
+
 app.get('/dynamic', function(req, res){
   var lis = '';
   for(var i=0; i<5; i++){
@@ -66,6 +78,6 @@ app.get('/route', function(req, res){
 app.get('/login', function(req, res){
     res.send('<h1>Login please</h1>');
 });
-app.listen(3000, function(){
+app.listen(3002, function(){
     console.log('Conneted 3000 port!');
 });
