@@ -1,15 +1,23 @@
 {
-  "name": "jade",
+  "name": "test",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cwaw72/test.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cwaw72/test/issues"
+  },
+  "homepage": "https://github.com/cwaw72/test#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "jade-bootstrap": "^1.0.9"
+    "jade": "^1.11.0"
   }
 }
