@@ -10,7 +10,7 @@ html
 		title= test
 		block styles
 			link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
-			link(rel='stylesheet', type='text/css', href='./css/mystyle.css')
+			link(rel='stylesheet', type='text/css', href='/css/mystyle.css')
 			link(rel="stylesheet",href="/css/login_form.css")
 			link(rel="stylesheet",href="/css/menu_side.css")
 		block mixins
@@ -47,7 +47,7 @@ html
 							#chat_preview= preview
 							div= price
 						div(style='margin-top:0px;border:solid 1px black;')
-						div	새로운 댓글이 달렸습니다.
+						div 새로운 댓글이 달렸습니다.
 						img.chat_img(src= item_img, alt='face', style='display:inline-block; position:absolute; right:0px; top:10px')
 						if status == 1
 							.noti_request(style='font-size:13px; font-weight:bold; height:20px; border-radius:5px; position: absolute; right:-3px; top:3px; color:white; text-align:center')
@@ -58,11 +58,11 @@ html
 							| 0
 					if blur == 1
 						#request_mode_blur(style='top:0px; left:0px; position:absolute; background-color:rgba(0,0,0,0.5); width:100%; height:100%;')
-							.text-center(style='top:20%; color:white; position:relative; font-weight:bold;')	아임벤님과의 매칭이 불발되었습니다.
+							.text-center(style='top:20%; color:white; position:relative; font-weight:bold;') 아임벤님과의 매칭이 불발되었습니다.
 							div(style='text-align:center; position:relative; top:25%;')
-								button.btn.btn-primary(type='button', style='font-size:15px; color:white; font-weight:bold; width:55%; height:20px ')	요청 리스트에 등록
+								button.btn.btn-primary(type='button', style='font-size:15px; color:white; font-weight:bold; width:55%; height:20px ') 요청 리스트에 등록
 							div(style='text-align:center; position:relative; top:30%;')
-								button.btn.btn-primary(type='button', style='font-size:10px; color:white; font-weight:bold; width:55%; height:20px ')	다른 여행자와 1:1 매칭
+								button.btn.btn-primary(type='button', style='font-size:10px; color:white; font-weight:bold; width:55%; height:20px ') 다른 여행자와 1:1 매칭
 			mixin travel_mode_list(blur, user_img, name, preview, item_img, price, status)
 				li#travel_mode_index.list-group-item(onclick='', style='margin-top:10px; left:5%; width:90%')
 					.chat_font_size(style='position:relative; ')
@@ -73,7 +73,7 @@ html
 							#chat_preview= preview
 							div= price
 						div(style='margin-top:0px;border:solid 1px black;')
-						div	새로운 댓글이 달렸습니다.
+						div 새로운 댓글이 달렸습니다.
 						if status == 1
 							img.chat_img(src= item_img, alt='face', style='display:inline-block; position:absolute; right:0px; top:10px')
 							.noti_request(style='font-size:13px; font-weight:bold; height:20px; border-radius:5px; position: absolute; right:-3px; top:3px; color:white; text-align:center')
@@ -84,9 +84,9 @@ html
 							| 0
 					if blur == 1
 						#travel_mode_blur(style='top:0px; left:0px; position:absolute; background-color:rgba(0,0,0,0.5); width:100%; height:100%;')
-							.text-center(style='top:30%; color:white; position:relative')	요청자가 다른 여행자를 선택하였습니다.
+							.text-center(style='top:30%; color:white; position:relative') 요청자가 다른 여행자를 선택하였습니다.
 							div(style='text-align:center; position:relative; top:40%;')
-								button.btn.btn-primary(type='button', style=' color:white; font-weight:bold ')	확인
+								button.btn.btn-primary(type='button', style=' color:white; font-weight:bold ') 확인
 	body(data-spy="scroll",data-target=".scrollspy")
 				block menu-side
 					#menu-sidebar-wrapper
@@ -98,7 +98,7 @@ html
 							li
 								a(href='travel_reg') 여행 등록
 							li
-								a(href='request_list') 요청 리스트
+								a(href='/list/request') 요청 리스트
 							li
 								a(href='travel_list') 여행자 리스트
 							li
@@ -113,15 +113,15 @@ html
 						div(style='margin-top:80px;')
 						div(style='text-align:center; font-size:0px; ')
 							button.btn.btn-default(onclick='btn1()', type='button', style='width:30%; height:80px; font-weight:bold; background:rgba(0, 159, 255, 1); color:white;')
-								img(src='p/3.png', alt='Chania', width='30', height='30')
+								img(src='/p/3.png', alt='Chania', width='30', height='30')
 								br
-								|	1:1 메세지
+								| 1:1 메세지
 							button.btn.btn-default(onclick='btn2()', type='button', style='width:30%; height:80px; font-weight:bold; background:rgba(103, 104, 104, 1); color:white;')
-								img(src='p/3.png', alt='Chania', width='30', height='30')
+								img(src='/p/3.png', alt='Chania', width='30', height='30')
 								br
 								|	요청자 모드
 							button.btn.btn-default(onclick='btn3()', type='button', style='width:30%; height:80px; font-weight:bold; background:rgba(103, 104, 104, 1); color:white;')
-								img(src='p/3.png', alt='Chania', width='30', height='30')
+								img(src='/p/3.png', alt='Chania', width='30', height='30')
 								br
 								|	여행자 모드
 						//- 채팅 창 리스트
@@ -133,13 +133,13 @@ html
 								//- 채팅 방
 							#chat_room(style='display:none; height:500px;')
 								div(style='background-color:rgba(204, 204, 204, 1); width:90%; margin-left:5%; margin-top:10px;')
-									button.btn.btn-default(type='button', onclick='close_chat_conten()')	이전
+									button.btn.btn-default(type='button', onclick='close_chat_conten()') 이전
 								ul#chat_content_list(style='height:500px; overflow:auto; margin-bottom:0px; margin-left:5%; width:90%; list-style:none; background-color:rgba(204, 204, 0, 0.5);')
 									//- 채팅 내용이 추가되는 부분
 									block chat_content_list
 								div(style='padding-top:5px; padding-bottom:5px; background-color:rgba(204, 204, 204, 1); width:90%; margin-left:5%; text-align:center;')
 									input#itemanme.form-control(type='itemname', placeholder='메세지를 입력하세요', style='display:inline-block;width:75%')
-									button.btn.btn-default(type='button', style='display:inline-block; width:20%')	전송
+									button.btn.btn-default(type='button', style='display:inline-block; width:20%') 전송
 
 
 						//- 요청자 모드 리스트
@@ -156,33 +156,34 @@ html
 
 						//- //////채팅창 끝
 				block top-bar
-					//- 상단 네비게이트 바
-					.container-fluid
-						.navbar.nav-tabs.navbar-fixed-top(style='background-color:white; border-bottom:1px solid gray')
-							.container
-								.col-xs-3(style='background-color:white;')
-									a#menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
-										i.glyphicon.glyphicon-bookmark
-								//- 가문데 로고
-								.col-xs-6(style='background-color:white-space; text-align:center; display:inline-block;')
-									button.btn.btn-default.btn-lg(type='button', style='', onclick="location.href='/'")
-										| 트래블쉽
-								//- 오른쪽 로그인, 회원가입
-								-if (host_name)
-									.col-xs-3(style='background-color:white')
-										img(src='p/2.jpg', alt='face', style='top:10px; display:inline-block; position:relative; border-radius:30px; width:35px; height:35px')
-										div(style='top:10px; position:relative; display:inline-block; text-align:left;')= host_name
-										button.btn.btn-default(type='button',onclick="location.href='/auth/logout'", data-toggle='modal', style='margin-top:10px; float:right;')
-											span.glyphicon.glyphicon-user	로그아웃
-										a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
-											i.glyphicon.glyphicon-bookmark
-								-else
-									.col-xs-3(style='background-color:white')
-										button.btn.btn-default(type='button', data-toggle='modal', data-target='#LoginModal', style='margin-top:10px; float:right;')
-											span.glyphicon.glyphicon-user	로그인
-										a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
-											i.glyphicon.glyphicon-bookmark
-								//- /상단 네비게이트 바
+							//- 상단 네비게이트 바
+							.container-fluid
+								.navbar.nav-tabs.navbar-fixed-top(style='background-color:white; border-bottom:1px solid gray')
+										div#top_logo(style='display:inline; position:absolute; top:5px; left:5%; ')
+											img(src='p/2.jpg' style='width:160px; height:40px;')
+											a#menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+												i.glyphicon.glyphicon-bookmark
+											a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+												i.glyphicon.glyphicon-bookmark
+										div.visible-lg-block#top_menu(style=' display:inline; position:absolute; top:5px; right:10%')
+											div(style='display:inline; margin-left:35px') 요청 리스트	
+											div(style='display:inline; margin-left:35px') 여행자 리스트	
+											div(style='display:inline; margin-left:35px') 플리 마켓
+											div(style='display:inline; margin-left:35px') 이벤트	
+											div(style='display:inline; margin-left:35px') 고객 센터
+											button.btn.btn-default(type='button' style='display:inline; margin-left:35px; width:115px; border-radius:5px') 구매 요청 등록	
+											button.btn.btn-default(type='button' style='display:inline; margin-left:15px; width:115px; border-radius:5px') 여행자 등록	
+											-if (host_name)
+												img(src='/p/2.jpg', alt='face', style='top:10px; display:inline-block; position:relative; border-radius:30px; width:35px; height:35px')
+												div(style='top:10px; position:relative; display:inline-block; text-align:left;')= host_name
+												button.btn.btn-default(type='button',onclick="location.href='/auth/logout'", data-toggle='modal', style='margin-top:10px; float:right;')
+													span.glyphicon.glyphicon-user 로그아웃
+												a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+													i.glyphicon.glyphicon-bookmark
+											-else 
+												button.btn.btn-default(type='button' data-toggle='modal' data-target='#LoginModal' style='display:inline; margin-left:35px; width:75px; padding:0px')
+													span.glyphicon.glyphicon-user 로그인
+
 				block main
 
 				//- 로그인 모달 팝업
@@ -199,7 +200,7 @@ html
 								.modal-body(style='text-align:center; margin-left:30px; margin-right:30px')
 									div
 										button.btn.btn-default.pull-right(type='button', data-dismiss='modal') X
-									img(src='p/2.jpg', alt='', width='100px', height='100px')
+									img(src='/p/2.jpg', alt='', width='100px', height='100px')
 									p(style='text-align:center; font-weight:bold')
 										br
 										|	여행의 직구는 여행자들이 직접 전해주는 배송 플랫폼입니다.
@@ -216,11 +217,11 @@ html
 										button.btn.btn-default.btn_jun(type='submit', style='border-radius:5px; width:100%; font-weight:bold ') 이메일 로그인
 										button.btn.btn-default(type='button', onclick="location.href='/auth/facebook'", style='border-radius:5px; font-weight:bold; margin-top:10px; margin-bottom:10px; width:100%') 페이스북 로그인
 										br
-										a.pull-left	비밀번호를 잊으셨다면?
+										a.pull-left 비밀번호를 잊으셨다면?
 										br
 								.modal-footer(style='text-align:left')
 									button.btn.btn-default(type='button', data-dismiss='modal', data-toggle='modal', data-target='#reModal', style='margin-top:10px; float:right;')
-										span.glyphicon.glyphicon-user	회원가입
+										span.glyphicon.glyphicon-user 회원가입
 									//-
 										<button type="button" class="btn btn-primary">로그인</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -239,7 +240,7 @@ html
 								.modal-body(style='text-align:center; margin-left:30px; margin-right:30px')
 									div
 										button.btn.btn-default.pull-right(type='button', data-dismiss='modal') X
-									img(src='p/2.jpg', alt='', width='100px', height='100px')
+									img(src='/p/2.jpg', alt='', width='100px', height='100px')
 									p(style='text-align:center; font-weight:bold')
 										br
 										|	여행자가 전달하고 쉽고 빠른 해외 직구!
@@ -252,7 +253,7 @@ html
 										input#re_pwd2.form-control(name='passwordCheck', type='password', placeholder='비밀번호', style='margin-bottom:10px')
 										input#re_nickname.form-control(name='username', type='username', placeholder='닉네임', style='margin-bottom:10px')
 										div(style='margin-left:4px; margin-right:4px')
-											p.pull-left(style='font-weight:bold; display:block')	휴대폰 인증 란
+											p.pull-left(style='font-weight:bold; display:block') 휴대폰 인증 란
 										div(style='margin-left:4px; margin-right:4px')
 											input#re_pnum.form-control.pull-left(placeholder='휴대폰 인증 번호', maxlength='11', style='display:inline; position:relative; width:65%')
 											button.btn.btn-default.pull-right(type='button', style='width:35%') 인증번호 보내기
@@ -264,7 +265,7 @@ html
 						.row
 							.col-sm-2
 							.col-sm-2(style='margin-bottom:15px')
-								h4	COMPANY INFORMATION
+								h4 COMPANY INFORMATION
 								p
 									| 상호명: 윰비스
 									br
@@ -279,13 +280,13 @@ html
 									|							이메일 주소 : GGu@naver.com
 									br
 							.col-sm-2(style='margin-bottom:15px')
-								h4	BANK ACCOUNT
+								h4 BANK ACCOUNT
 								p
 									| 예금주: 윰비스
 									br
 									|							(하나) : 000000000000
 									br
-								p	CUSTOMER SERVICE
+								p CUSTOMER SERVICE
 								p
 									| 010 0000 0000
 									br
@@ -294,7 +295,7 @@ html
 									|							 CLOSE : NEVER
 									br
 							.col-sm-2(style='margin-bottom:15px')
-								h4	INFORMATION
+								h4 INFORMATION
 								p
 									| About us
 									br
@@ -307,13 +308,13 @@ html
 									|							 개인 보호 정책
 									br
 							.col-sm-2(style='')
-								h4	STAY CONNECTED
+								h4 STAY CONNECTED
 
 
 	block scripts
 			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-			script(type='text/javascript', src='myjs.js')
+			script(type='text/javascript', src='/myjs.js')
 			script(type='text/javascript').
 					//-메뉴창
 					//- window.onload = function(){

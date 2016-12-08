@@ -1,0 +1,25 @@
+//- .col-xs-1(style='background-color:white;')
+//- 	img(src='p/2.jpg', alt='face', style='top:10px; display:inline-block; position:relative; border-radius:30px; width:120px; height:35px')
+//- 	a#menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+//- 		i.glyphicon.glyphicon-bookmark
+//- //- 가문데 로고
+//- .col-xs-6(style='background-color:white-space; display:inline-block;')
+//- 	img(src='p/2.jpg', alt='face', style='top:10px; display:inline-block; position:relative; border-radius:30px; width:120px; height:35px')
+//- 	button.btn.btn-default.btn-lg(type='button', style='', onclick="location.href='/'")
+//- 		| 트래블쉽
+//- //- 오른쪽 로그인, 회원가입
+//- -if (host_name)
+//- 	.col-xs-3(style='background-color:white')
+//- 		img(src='p/2.jpg', alt='face', style='top:10px; display:inline-block; position:relative; border-radius:30px; width:35px; height:35px')
+//- 		div(style='top:10px; position:relative; display:inline-block; text-align:left;')= host_name
+//- 		button.btn.btn-default(type='button',onclick="location.href='/auth/logout'", data-toggle='modal', style='margin-top:10px; float:right;')
+//- 			span.glyphicon.glyphicon-user	로그아웃
+//- 		a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+//- 			i.glyphicon.glyphicon-bookmark
+//- -else
+//- 	.col-xs-3(style='background-color:white')
+//- 		button.btn.btn-default(type='button', data-toggle='modal', data-target='#LoginModal', style='margin-top:10px; float:right;')
+//- 			span.glyphicon.glyphicon-user	로그인
+//- 		a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
+//- 			i.glyphicon.glyphicon-bookmark
+//- /상단 네비게이트 바

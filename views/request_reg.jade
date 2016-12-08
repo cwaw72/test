@@ -64,52 +64,52 @@ block main
 			.hidden-xs(style='margin-top:60px')
 			p.header_jun 1. 상품 정보 입력
 			.row
-				// 이미지 등록 & 기본 정보 입력 란
-				#reg_picture.col-xs-12.col-sm-4(style='text-align:center')
-					// the avatar markup
-					form.text-center(action='/avatar_upload.php', method='post', enctype='multipart/form-data', style='position:relative; margin-top:30px')
-						#kv-avatar-errors-2.center-block.text-center(style='width:200px;display:none;')
-						.kv-avatar.center-block(style='width:210px')
-							input#avatar-2.file-loading(name='avatar-2', type='file')
-						// include other inputs if needed and include a form submit (save) button
-					// your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission
-				#reg_info.col-xs-12.col-sm-8(style='')
-					p.reg_input	상품명 
-					input#email.form-control.reg_input(type='name', placeholder='상품명')
-					br
-					p.reg_input	링크걸기 
-					input.form-control.reg_input(type='name', placeholder='여행자가 참고할 물품 링크를 입력해주세요.', id='')
-					br
-					p.reg_input	상품 개수 선택 
-					input#email.form-control.reg_input(type='phone', placeholder='상품 개수 선택')
-					br
-					p.reg_input	상품 요철할 지역 선택하기 
-					input.form-control.reg_input(type='text', placeholder='소속', id='')
-					br
-			p.reg_input(style='margin-left: 10%;')	기타요청 사항 
-			textarea.form-control.reg_input(placeholder='소개', id='', style='margin-left: 10%; width:80%; height:150px')
-			br
-			.row
-				p.header_jun	2. 만료일 설정
-				// 본인 인증란
-				div(style='')
-					p.reg_input(style='padding:10px; margin-left:10%')
-						| 요청한 물품을 수령받고 싶은 기간을 설정해주세요.
+				form(action='/avatar_upload.php', method='post', enctype='multipart/form-data', style='')
+					// 이미지 등록 & 기본 정보 입력 란
+					#reg_picture.col-xs-12.col-sm-4(style='text-align:center')
+						// the avatar markup
+							#kv-avatar-errors-2.center-block.text-center(style='width:200px;display:none;')
+							.kv-avatar.center-block(style='width:210px')
+								input#avatar-2.file-loading(name='avatar-2', type='file')
+							// include other inputs if needed and include a form submit (save) button
+						// your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission
+					#reg_info.col-xs-12.col-sm-8(style='')
+						p.reg_input	상품명 
+						input#email.form-control.reg_input(type='name', placeholder='상품명')
 						br
-						|											 (국내 택배 사정에 따라 1~2일간 차이가 날 수 있습니다.)
-					.form-group(style=' margin-left:10%; width:80%')
-						#end_datetimepicker1.input-group.date
-							input.form-control(type='text', placeholder='만료일')
-							span.input-group-addon
-								span.glyphicon.glyphicon-calendar
-			.row
-				p.header_jun	3. 가격 제시
-				// 본인 인증란
-				p.reg_input(style='padding:10px; margin-left:10%')	여행자의 수고비를 포함한 물품 전체 가격을 적어주세요.
-				input.form-control.reg_input(type='text', placeholder='가격', id='', style='padding:10px; margin-left:10%; width:80%')
-			// 버튼
-			.col-xs-12(style='margin-bottom:50px; text-align:center')
-				button.btn.btn_jun(type='button', style='margin-top:50px;', onclick="location.href='request_reg2'")	다음 
+						p.reg_input	링크걸기 
+						input.form-control.reg_input(type='name', placeholder='여행자가 참고할 물품 링크를 입력해주세요.', id='')
+						br
+						p.reg_input	상품 개수 선택 
+						input#email.form-control.reg_input(type='phone', placeholder='상품 개수 선택')
+						br
+						p.reg_input	상품 요철할 지역 선택하기 
+						input.form-control.reg_input(type='text', placeholder='소속', id='')
+						br
+				p.reg_input(style='margin-left: 10%;')	기타요청 사항 
+				textarea.form-control.reg_input(placeholder='소개', id='', style='margin-left: 10%; width:80%; height:150px')
+				br
+				.row
+					p.header_jun	2. 만료일 설정
+					// 본인 인증란
+					div(style='')
+						p.reg_input(style='padding:10px; margin-left:10%')
+							| 요청한 물품을 수령받고 싶은 기간을 설정해주세요.
+							br
+							|											 (국내 택배 사정에 따라 1~2일간 차이가 날 수 있습니다.)
+						.form-group(style=' margin-left:10%; width:80%')
+							#end_datetimepicker1.input-group.date
+								input.form-control(type='text', placeholder='만료일')
+								span.input-group-addon
+									span.glyphicon.glyphicon-calendar
+				.row
+					p.header_jun	3. 가격 제시
+					// 본인 인증란
+					p.reg_input(style='padding:10px; margin-left:10%')	여행자의 수고비를 포함한 물품 전체 가격을 적어주세요.
+					input.form-control.reg_input(type='text', placeholder='가격', id='', style='padding:10px; margin-left:10%; width:80%')
+				// 버튼
+				.col-xs-12(style='margin-bottom:50px; text-align:center')
+					button.btn.btn_jun(type='button', style='margin-top:50px;', onclick="location.href='request_reg2'")	다음 
 		
 
 block scripts
