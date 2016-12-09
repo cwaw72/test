@@ -261,12 +261,12 @@ html
 									.modal-footer(style='margin:0px; text-align:center')
 					//- /회원가입 모달 팝업
 				block intro_company
-					.container-fluid(style='color:white; text-align:left; padding-top:80px; padding-bottom:40px; background-color:rgba(45, 159, 255, 1);')
+					.container-fluid.background_dark_gray(style='color:white; text-align:left; padding-top:80px; padding-bottom:40px;')
 						.row
 							.col-sm-2
 							.col-sm-2(style='margin-bottom:15px')
 								h4 COMPANY INFORMATION
-								p
+								p.text_gray
 									| 상호명: 윰비스
 									br
 									|							대표 : 황유미, 오승아
@@ -315,7 +315,6 @@ html
 			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 			script(type='text/javascript', src='/myjs.js')
-			script(type='text/javascript').
 					//-메뉴창
 					//- window.onload = function(){
 					//- 	//- 채팅 hover js file로 넣을 경우 작동이 안됌 이유를 모르겠다.

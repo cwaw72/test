@@ -1,5 +1,53 @@
 body{
-  background-color:green;
+  background-color:rgba(255,255,255,1);
+}
+
+/*00aeef   (0, 174, 239, 1)
+메인 색 노란 ( 255, 186, 0, 1)
+cccccc    (204, 204, 204, 1)
+진한회색    (103, 104, 104, 1)
+요청 FF2319 빨강 (255, 35, 25, 1)
+완료 CC1C14 다홍 (204, 28, 20, 1)
+진행중 ABB217 초록 (171, 178, 23, 1)
+매칭중 FF9C00 노랑 (255, 156, 0, 1)
+대기 2D9FFF 퍼렁 (45, 159, 255, 1)
+*/
+.text_size1{
+  font-size:18px;
+}
+.text_size2{
+  font-size:12px;
+}
+.text_dark_gray{
+  color:rgba(102, 102, 102, 1);
+}
+.text_gray{
+  color:rgba(204, 204, 204, 1);
+}
+.text_blue{
+  color:rgba(0, 174, 239, 1);
+}
+.text_yellow{
+  color:rgba(255, 186, 0, 1);
+}
+.text_blod{
+  font-weight:bold;
+}
+.text_white{
+  color:rgba(255, 255, 255, 1);
+}
+.background_dark_gray{
+  background-color:rgba(51, 51, 51, 1);
+}
+.background_blue{
+  background-color:rgba(0, 174, 239, 1);
+}
+.background_yellow{
+  background-color:rgba(255, 186, 0, 1);
+}
+
+.placeholder_text_size{
+  font-size:12px;
 }
 
 .kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
@@ -40,6 +88,11 @@ body{
   background-color:black;
 }
 
+.reg_input{
+  font-weight: bold;
+  width:100%;
+}
+
 /*-------------------------------*/
 /*            travel_reg         */
 /*-------------------------------*/
@@ -55,8 +108,6 @@ body{
 
 .header_jun{
   color:rgba(0, 174, 239, 1);
-  margin-top:20px;
-  margin-left:6%;
   font-size:25px;
   font-weight: bold;
 }
@@ -166,10 +217,6 @@ body{
   height:100%;
 }
 
-.reg_main_inner{
-  width:70%;
-}
-
 .main_current{
   background-size:170px 170px;
   width:170px; height:170px;
@@ -213,11 +260,8 @@ body{
 }
 
 .reg_main{
-  background-color:rgba( 100, 100, 100, 0.2 );
-  padding-top:100px;
+  padding-top:60px;
   padding-bottom:80px;
-  padding-left: 30px;
-  padding-right: 30px;
 }
 
 .reg_main_text{
@@ -272,10 +316,7 @@ body{
 
 
 
-  .reg_input{
-    font-weight: bold;
-    width:80%;
-  }
+
   #etc_input{
     display:inline-block;
     position:relative;
@@ -321,18 +362,14 @@ body{
     top:40%
   }
   .modal_size{
-    width:450px;
+    width:400px;
     height:600px
   }
 
   .request2_img{
-    margin-top:30px;
     position:absolute;
-    top:9%;
-    left:9%;
-    width:180px;
-    height:180px;
-    margin-bottom: 10px;
+    top:0px;
+    left:0px;
   }
   .request2_sort_btn{
     top:30px;
@@ -376,17 +413,13 @@ body{
     top:40%
   }
   .modal_size{
-    width:450px;
+    width:400px;
     height:600px
   }
   .request2_img{
-    margin-top:25px;
     position:absolute;
-    top:8%;
-    left:8%;
-    width:160px;
-    height:160px;
-    margin-bottom: 10px;
+    top:0px;
+    left:0px;
   }
   .request2_sort_btn{
      top:20px;
@@ -452,17 +485,13 @@ body{
     top:40%
   }
   .modal_size{
-    width:420px;
+    width:400px;
     height:600px
   }
   .request2_img{
-    margin-top:20px;
     position:absolute;
-    top:8%;
-    left:8%;
-    width:140px;
-    height:140px;
-    margin-bottom: 5px;
+    top:0px;
+    left:0px;
   }
 
   .request_now_status_array{
@@ -510,9 +539,6 @@ body{
      left:5px;
      top:5px
   }
-  .reg_main_inner{
-    width:100%;
-  }
   .request2_sort_btn{
     margin-top:30px;
   }
@@ -522,17 +548,12 @@ body{
   }
   .header_jun{
     color:rgba(0, 174, 239, 1);
-    margin-top:20px;
-    margin-left:0px;
     font-size:25px;
     font-weight: bold;
   }
   .reg_main{
-    background-color:rgba( 100, 100, 100, 0.2 );
     padding-top:60px;
     padding-bottom:40px;
-    padding-left: 5px;
-    padding-right: 5px;
   }
   html{font-size:18px;}
   .request2_btn{
@@ -573,13 +594,9 @@ body{
     height:600px
   }
   .request2_img{
-    margin-top:5px;
     position:absolute;
-    top:8%;
-    left:4%;
-    width:90px;
-    height:90px;
-    margin-bottom: 5px;
+    top:0px;
+    left:0px;
   }
   .request_now_status_array{
     margin-top:25px;
