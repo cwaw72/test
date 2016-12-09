@@ -158,14 +158,14 @@ html
 				block top-bar
 							//- 상단 네비게이트 바
 							.container-fluid
-								.navbar.nav-tabs.navbar-fixed-top(style='background-color:white; border-bottom:1px solid gray')
-										div#top_logo(style='display:inline; position:absolute; top:5px; left:5%; ')
+								.navbar.nav-tabs.navbar-fixed-top(style='background-color:white; border-bottom:1px solid gray; height:60px;')
+										div#top_logo(style='display:inline; position:absolute; top:10px; left:5%; ')
 											img(src='p/2.jpg' style='width:160px; height:40px;')
 											a#menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
 												i.glyphicon.glyphicon-bookmark
 											a#login-menu-toggle.btn.btn-primary.btn-lg.toggle(href='#')
 												i.glyphicon.glyphicon-bookmark
-										div.visible-lg-block#top_menu(style=' display:inline; position:absolute; top:5px; right:10%')
+										div.visible-lg-block#top_menu(style=' display:inline; position:absolute; top:12px; right:10%')
 											div(style='display:inline; margin-left:35px') 요청 리스트	
 											div(style='display:inline; margin-left:35px') 여행자 리스트	
 											div(style='display:inline; margin-left:35px') 플리 마켓
@@ -261,10 +261,9 @@ html
 									.modal-footer(style='margin:0px; text-align:center')
 					//- /회원가입 모달 팝업
 				block intro_company
-					.container-fluid.background_dark_gray(style='color:white; text-align:left; padding-top:80px; padding-bottom:40px;')
-						.row
-							.col-sm-2
-							.col-sm-2(style='margin-bottom:15px')
+					.container-fluid.background_dark_gray(style='color:white; padding-top:80px; padding-bottom:40px;')
+						.container
+							.col-sm-3(style='margin-bottom:15px')
 								h4 COMPANY INFORMATION
 								p.text_gray
 									| 상호명: 윰비스
@@ -279,24 +278,24 @@ html
 									br
 									|							이메일 주소 : GGu@naver.com
 									br
-							.col-sm-2(style='margin-bottom:15px')
+							.col-sm-3(style='margin-bottom:15px')
 								h4 BANK ACCOUNT
-								p
+								p.text_gray
 									| 예금주: 윰비스
 									br
 									|							(하나) : 000000000000
 									br
 								p CUSTOMER SERVICE
-								p
+								p.text_gray
 									| 010 0000 0000
 									br
 									|							 OPEN : MON-FRI AM11-PM5
 									br
 									|							 CLOSE : NEVER
 									br
-							.col-sm-2(style='margin-bottom:15px')
+							.col-sm-3(style='margin-bottom:15px')
 								h4 INFORMATION
-								p
+								p.text_gray
 									| About us
 									br
 									|							 FAQ
@@ -307,7 +306,7 @@ html
 									br
 									|							 개인 보호 정책
 									br
-							.col-sm-2(style='')
+							.col-sm-3(style='')
 								h4 STAY CONNECTED
 
 
@@ -315,18 +314,5 @@ html
 			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 			script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 			script(type='text/javascript', src='/myjs.js')
-					//-메뉴창
-					//- window.onload = function(){
-					//- 	//- 채팅 hover js file로 넣을 경우 작동이 안됌 이유를 모르겠다.
-					//- 	$("#request_mode_index").hover(function(){
-					//- 		document.getElementById("request_mode_blur").style.display="inline";
-					//- 	},function(){
-					//- 		document.getElementById("request_mode_blur").style.display="none";
-					//- 	});
-					//-
-					//- 	$("#travel_mode_index").hover(function(){
-					//- 		document.getElementById("travel_mode_blur").style.display="inline";
-					//- 	},function(){
-					//- 		document.getElementById("travel_mode_blur").style.display="none";
-					//- 	});
-					//- }
+			script(type='text/javascript').
+				

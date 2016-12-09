@@ -6,23 +6,47 @@ body{
 메인 색 노란 ( 255, 186, 0, 1)
 cccccc    (204, 204, 204, 1)
 진한회색    (103, 104, 104, 1)
-요청 FF2319 빨강 (255, 35, 25, 1)
-완료 CC1C14 다홍 (204, 28, 20, 1)
-진행중 ABB217 초록 (171, 178, 23, 1)
-매칭중 FF9C00 노랑 (255, 156, 0, 1)
-대기 2D9FFF 퍼렁 (45, 159, 255, 1)
+
+상황별 색
+완료   828992 회색 (130, 137, 146, 1)
+진행중 ea6060 다홍 (234, 96, 96, 1)
+매칭중 FFa200 노랑 (255, 162, 0, 1)
+대기중 3fc618 퍼렁 (63, 198, 24, 1)
+
+메인컬러
+연보라      2d9fff    (45, 159, 255, 1)
+파란        00aeef   (0, 174, 239, 1)
+노랑        ffba00   (255, 186, 0, 1)
+레몬        fff200   (255, 242, 0, 1)
+
+라인 컬러
+파란           00aeef   (0, 174, 239, 1)
+회색1(연회색)    cccccc   (204, 204, 204, 1)
+회색2(연연회색)  e3e3e3   (227, 227, 227, 1)
+회색3(연연연회색) eeeeee   (238, 238, 238, 1)
+
+폰트 컬러
+파란        00aeef   (0, 174, 239, 1)
+노랑        ffba00   (255, 186, 0, 1)
+진함 검정    333333   (51, 51, 51, 1)
+진한 회색    666666   (102, 102, 102, 1)
+회색        999999   (153, 153, 153, 1)
+
 */
 .text_size1{
   font-size:18px;
 }
-.text_size2{
+.text_size_nomal{
   font-size:12px;
+}
+.text_size_index{
+  font-size:14px;
 }
 .text_dark_gray{
   color:rgba(102, 102, 102, 1);
 }
 .text_gray{
-  color:rgba(204, 204, 204, 1);
+  color:rgba(153, 153, 153, 1);
 }
 .text_blue{
   color:rgba(0, 174, 239, 1);
@@ -179,10 +203,7 @@ cccccc    (204, 204, 204, 1)
   width:40%;
 }
 
-.index_reg_btn_size{
-  width:160px;
-  height:38px
-}
+
 
 .bottom_margin{
   margin-bottom:20px;
@@ -302,9 +323,8 @@ cccccc    (204, 204, 204, 1)
 /*큰 화면*/
 @media (min-width:768px){
   .recommend_item_array{
-    margin-left:100px;
-    margin-right:100px;
-    margin-top:30px;
+    margin-left:10%;
+    margin-right:10%;
   }
   .form-inline.jun{
     width:98%; height:65px;}
@@ -355,8 +375,8 @@ cccccc    (204, 204, 204, 1)
     width:26%
   }
   .index_icon{
-    width:25%;
-    height:25%;
+    width:15%;
+    height:15%;
   }
   .carousel_top{
     top:40%
@@ -406,8 +426,8 @@ cccccc    (204, 204, 204, 1)
     width:24%
   }
   .index_icon{
-    width:25%;
-    height:25%;
+    width:20%;
+    height:20%;
   }
   .carousel_top{
     top:40%
@@ -474,8 +494,8 @@ cccccc    (204, 204, 204, 1)
     width:20%;
   }
   .index_icon{
-    width:35%;
-    height:35%;
+    width:25%;
+    height:25%;
   }
   .carousel_indicators_top{
     top:90%;
@@ -565,10 +585,7 @@ cccccc    (204, 204, 204, 1)
     height:30px;
     width:60%;
   }
-  .index_reg_btn_size{
-    width:120px;
-    height:30px
-  }
+
   .index_search_bar3{
     width:30%
   }
@@ -579,8 +596,8 @@ cccccc    (204, 204, 204, 1)
     width:50%
   }
   .index_icon{
-    width:40%;
-    height:40%;
+    width:30%;
+    height:30%;
   }
   .carousel_indicators_top{
     top:80%;

@@ -3,6 +3,13 @@ extends layout
 block data
 	-var test = "여행의 직구"
 
+block styles
+	link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css')
+	link(rel='stylesheet', type='text/css', href='/css/mystyle.css')
+	link(rel="stylesheet",href="/css/login_form.css")
+	link(rel="stylesheet",href="/css/menu_side.css")
+
 block chat_list
 	+chat_list('p/2.jpg', 'username', 'preview', '오전10:23', 'p/2.jpg', '5')
 block chat_content_list
@@ -22,7 +29,7 @@ block travel_mode_list
 	+travel_mode_list(1 , 'p/2.jpg', 'name', 'preview', 'p/1.jpg', 'price', 1)
 // 커다란 이미지
 block main
-	.container-fulid(style='margin-top:30px')
+	.container-fulid(style='margin-top:40px')
 		br
 		#myCarousel.carousel.slide(data-ride='carousel', background-color='black;')
 			// Indicators
@@ -34,40 +41,29 @@ block main
 			// Wrapper for slides
 			.carousel-inner(role='listbox')
 				.item.active
-					img(src='p/back3.jpg', alt='b1', style='background-color:rgba( 0, 0, 0, 0.5 );')
-					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%; width:100%; height:100%;')
+					img(src='p/background_1600_520.jpg', alt='b1', style='background-color:rgba( 0, 0, 0, 0.5 );')
+					.carousel-caption(style='position:absolute; left:0; top:0%; width:100%; height:80%;')
 						.text-center.carousel_top
-							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
-							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
+							h1(style='text-align:center; font-size:1.6rem') 여행자가 직접 전해 주니까!
+							p(style='font-size:0.9rem') 배송비는 저렴하게! 배송기간은 빠르게!
 				.item
-					img(src='p/back3.jpg', alt='Chania', width='*', height='*')
+					img(src='p/background_1600_520.jpg', alt='Chania', width='*', height='*')
 					.carousel-caption(style='background-color:rgba( 0, 0, 0, 0.5 ); position:absolute; left:0; top:0%;width:100%; height:100%;')
 						.text-center.carousel_top
 							h1(style='text-align:center; font-size:1.4rem') 여행자가 직접 전해 주니까!
 							p(style='font-size:0.7rem') 배송비는 저렴하게! 배송기간은 빠르게!
 
 			
-			div.search(style='position:absolute; bottom:0px; width:100%; background-color:rgba(0, 0, 0, 0.6); ')
+			div.search(style='position:absolute; bottom:0px; width:100%; ')
 				//- 검색 창
-				form.form-inline.jun(style='text-align:center; display:inline-block; font-size:0px; padding-top:30px; padding-bottom:30px; margin:0px; height:100%; ')
+				form.form-inline.jun(style='text-align:center; display:inline-block; font-size:0px; padding-bottom:60px; margin:0px; height:100%; ')
 					.container
 						//- 국가 선택
-						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);	height:50px; width:20%; border-top-left-radius:5px; border-bottom-left-radius:5px')
-							button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%;  border-top-left-radius:5px;  border-bottom-left-radius:5px;')
+						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);	height:50px; width:25%; border-top-left-radius:5px; border-bottom-left-radius:5px')
+							button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%;  border-top-left-radius:5px;  border-bottom-left-radius:5px;' onclick='select_nation()')
 								| 전체 국가
 								span.caret
-							ul.dropdown-menu(style='text-align:center; width:100% ')
-								li
-									a(href='#', style='font-size:0.6rem; font-weight:bold; ') 한국
-								li
-									a(href='#', style='font-size:0.6rem; font-weight:bold') 북미
-								li
-									a(href='#', style='font-size:0.6rem; font-weight:bold') 아시아
-								li
-									a(href='#', style='font-size:0.6rem; font-weight:bold') 유럽
-								li
-									a(href='#', style='font-size:0.6rem; font-weight:bold') 아프리카
-						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1); height:50px; width:20%')
+						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1); height:50px; width:25%')
 							button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%; ')
 								| 만료일
 								span.caret
@@ -81,9 +77,10 @@ block main
 								li
 									input(type='date', name='enddate', min='2016-10-31', style='font-weight:bold; font-size:0.6rem;')
 						// 검색 form
-						input#itemanme.form-control.main_search.index_search_bar2(type='itemname', placeholder='상품명', style='height:50px; width:20%')
+						input#itemanme.form-control.main_search.index_search_bar2(type='itemname', placeholder='상품명', style='height:50px; width:25%')
 						// 검색하기 버튼
-						button.btn.btn-default.main_search.index_search_bar3(type='button', style='background-color:rgba(45, 159, 255, 1); color:white; height:50px; width:20%; border-top-right-radius:5px; border-bottom-right-radius:5px') 구매요청	
+						button.btn.btn-default.main_search.index_search_bar3(type='button', style='background-color:rgba(45, 159, 255, 1); color:white; height:50px; width:5%; border-top-right-radius:5px; border-bottom-right-radius:5px')
+							span.glyphicon.glyphicon-search
 				
 			// Left and right controls
 			a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
@@ -94,30 +91,32 @@ block main
 				span.sr-only Next
 	//큰이미지 끝
 
-	.hidden-xs(style='margin-top:30px')
+	.hidden-xs(style='margin-top:70px')
 	.visible-xs-block(style='margin-top:20px;')
 
 	// 등록하기 창
-	.container(style='margin-top:30px; margin-bottom:30px')
+	.container(style='')
 		.col-xs-6(style='margin-top:40px; background-color:white; text-align:center; display:inline-block;')
-			img.index_icon(src='p/2.png', alt='tlavler register')
-			p(style='margin-top:20px ; font-weight: bold; font-size:0.6rem')
+			img.index_icon(src='p/airplane_gray.png', alt='tlavler register')
+			p(style='margin-top:25px ; margin-bottom:35px; font-size:0.6rem')
 				| 구매자의 부탁을 들어주고,
 				br
 				|					 여행자금을 모으세요!
-			button.btn.btn-primary.btn_jun.index_reg_btn_size(type='button', onclick="location.href='/reg/travel'") 여행자 등록
+			button.btn.btn-primary.background_blue.text_blod(type='button', onclick="location.href='/reg/travel)'" style='width:200px; height:50px; border-radius:25px; border:1px solid rgba(204, 204, 204, 1) ') 여행자 등록 >
 		.col-xs-6(style='margin-top:40px; background-color:white; text-align:center;')
-			img.index_icon(src='p/3.png', alt='buyer register')
-			p(style='margin-top:20px; font-weight: bold;	font-size:0.6rem;')
+			img.index_icon(src='p/shopping_dark_gray2.png', alt='buyer register')
+			p(style='margin-top:25px; margin-bottom:35px;	font-size:0.6rem;')
 				| 저렴한 가격에 원하는 물건을
 				br
 				|					여행자에게 부탁하세요!
-			button.btn.btn-primary.btn_jun.index_reg_btn_size(type='button', style='', onclick="location.href='/reg/request'") 구매요청 등록
-	.hidden-xs(style='margin-top:40px')
+			button.btn.btn-primary.background_blue.text_blod(type='button', onclick="location.href='/reg/request'" style='width:200px; height:50px; border-radius:25px;  border:1px solid rgba(204, 204, 204, 1) ') 구매요청 등록 >
+	
 	//등록하는 창 끝
+	
+	.hidden-xs(style='margin-top:70px')
 
 	// 이 달의 추천 상품
-	.container(style='margin-top:10px; position:relative; text-align:center')
+	.container-fulid(style='position:relative; text-align:center')
 		br
 		#ad.carousel.slide(data-ride='carousel')
 			// Indicators
@@ -129,20 +128,33 @@ block main
 			// Wrapper for slides
 			.carousel-inner(role='listbox', style='padding-bottom:30px')
 				img(src='./p/backg.png', alt='광고란', width='100%', height='100%', style='position:absolute; left:0%; top:0%;')
-				.item.active(style='height:100%')
-					div(style='position:relative; font-size:0.9rem; font-weight:bold; margin-top:10px')
-						p 이 달의 추천 상품
-						button.btn.btn-primary.btn_jun.ad_p(type='button', style='font-size:0.7rem') 월별 테마 상품 더 보러 가기
-					.recommend_item_array(style=' text-align:center ; ')
-						.col-md-3.col-xs-6
-							img(src='/p/s3.png', alt='1', width='80%', style='margin:5%; display:inline-block')
-						.col-md-3.col-xs-6
-							img(src='/p/s3.png', alt='2', width='80%', style='margin:5%; display:inline-block')
-						.col-md-3.col-xs-6
-							img(src='/p/s3.png', alt='3', width='80%', style='margin:5%; display:inline-block')
-						.col-md-3.col-xs-6
-							img(src='/p/s3.png', alt='4', width='80%', style='margin:5%; display:inline-block')
+				div(style='position:absolute; top:0%; left:40%;')
+					h2.text_blod(style='margin-top:70px; margin-bottom:30px;') 이 달의 추천 상품
+					p.text_size_index() 이달의 여행의직구가 준비한 상품은 새콥달콤의 망고! <br> 망고는 사랑입니다. I LOVE SWEETY MANGO
+				.item.active(style='margin-top:230px;')
+						.recommend_item_array(style=' text-align:center; ')
+							.col-md-3.col-xs-6
+								img(src='p/r1.png', alt='1', style=' display:inline-block; width:240px; height:240px;')
+								div(style='display:inline-block; background-color:white; width:240px; text-align:left; padding-top:25px; padding-left:20px; padding-right:20px; ;')
+									div.text_blod(style='padding-bottom:15px;' ) 망고 얼려먹으면 극강의 맛!
+									div.text_gray.text_size_nomal(style='padding-bottom:30px;') 대만 망고젤리 TUKI&LOVE
+							.col-md-3.col-xs-6
+								img(src='p/r2.png', alt='1', style='display:inline-block; width:240px; height:240px;')
+								div(style='display:inline-block; background-color:white; width:240px; text-align:left; padding-top:25px; padding-left:20px; padding-right:20px; ;')
+									div.text_blod(style='padding-bottom:15px;' ) 망고 얼려먹으면 극강의 맛!
+									div.text_gray.text_size_nomal(style='padding-bottom:30px;') 대만 망고젤리 TUKI&LOVE
+							.col-md-3.col-xs-6
+								img(src='p/r3.png', alt='1', style='display:inline-block; width:240px; height:240px;')
+								div(style='display:inline-block; background-color:white; width:240px; text-align:left; padding-top:25px; padding-left:20px; padding-right:20px; ;')
+									div.text_blod(style='padding-bottom:15px;' ) 망고 얼려먹으면 극강의 맛!
+									div.text_gray.text_size_nomal(style='padding-bottom:30px;') 대만 망고젤리 TUKI&LOVE
+							.col-md-3.col-xs-6
+								img(src='p/r4.png', alt='1', style='display:inline-block; width:240px; height:240px;')
+								div(style='display:inline-block; background-color:white; width:240px; text-align:left; padding-top:25px; padding-left:20px; padding-right:20px; ;')
+									div.text_blod(style='padding-bottom:15px;' ) 망고 얼려먹으면 극강의 맛!
+									div.text_gray.text_size_nomal(style='padding-bottom:30px;') 대만 망고젤리 TUKI&LOVE
 			// Left and right controls
+			
 			a.left.carousel-control(href='#ad', role='button', data-slide='prev')
 				span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
 				span.sr-only Previous
@@ -152,7 +164,7 @@ block main
 	//이달의 추천 상품 끝
 
 	// 사용 설명서
-	.container.hidden-xs(style='margin-top:30px')
+	.container-fulid.hidden-xs(style='margin-top:80px')
 		br
 		#how_to_use.carousel.slide(data-ride='carousel', background-color='black;')
 			// Indicators
@@ -161,11 +173,6 @@ block main
 				li(data-target='#how_to_use', data-slide-to='1', style='width:30px')
 				li(data-target='#how_to_use', data-slide-to='2', style='width:30px')
 				li(data-target='#how_to_use', data-slide-to='3', style='width:30px')
-				li(data-target='#how_to_use', data-slide-to='4', style='width:30px')
-				li(data-target='#how_to_use', data-slide-to='5', style='width:30px')
-				li(data-target='#how_to_use', data-slide-to='6', style='width:30px')
-				li(data-target='#how_to_use', data-slide-to='7', style='width:30px')
-				li(data-target='#how_to_use', data-slide-to='8', style='width:30px')
 			// Wrapper for slides
 			.carousel-inner(role='listbox')
 				.item.active
@@ -173,19 +180,9 @@ block main
 				.item
 					img(src='p/how_to_use2.jpg', alt='Chania', width='*', height='*')
 				.item
-					img(src='p/how_to_use3.jpg', alt='Chania', width='*', height='*')
-				.item
-					img(src='p/how_to_use4.jpg', alt='Chania', width='*', height='*')
-				.item
 					img(src='p/how_to_use5.jpg', alt='Chania', width='*', height='*')
 				.item
-					img(src='p/how_to_use6.jpg', alt='Chania', width='*', height='*')
-				.item
-					img(src='p/how_to_use7.jpg', alt='Chania', width='*', height='*')
-				.item
 					img(src='p/how_to_use8.jpg', alt='Chania', width='*', height='*')
-				.item
-					img(src='p/how_to_use9.jpg', alt='Chania', width='*', height='*')
 			//
 				Left and right controls
 				<a class="left carousel-control" href="#how_to_use" role="button" data-slide="prev">
@@ -198,31 +195,101 @@ block main
 				</a>
 	// /////////////사용설명서
 
+
 	// 이벤트 란 & 거래 진행 란
-	.container(style='text-align:center; margin-top:30px; margin-bottom:30px; background-color:rgba(238, 238, 238, 1)')
-		div(style='margin-top:30px')
-			.col-md-7
-				img(src='./p/c.png', alt='쿠폰지급', width='100%', style='position:relative')
-				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px;') 페이스북으로 초대하기
-				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px; background-color:rgba(255,186,0,1);') 카카오톡으로 초대하기
-				button.btn.btn-primary.btn_jun(type='button', style='position:relative; width:30%; top:-40px;') 이메일로 초대하기
-				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s1.png);')
-					| 누적
-					br
-					|	구매 건수
-					br
-					p(style='color:yellow') 5,234건
-				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s2.png); ')
-					| 3일 이내
-					br
-					|	배송가능 여행자
-					br
-					p(style='color:yellow') 302명
-				.col-md-3.main_current.hidden-xs(style='background-image:url(./p/s3.png);')
-					| 평균
-					br
-					|	배송 기간
-					br
-					p(style='color:yellow') 5.5일
-			.col-md-5
-				img(src='./p/e1.png', alt='여행자 등록', width='100%', style='position:relative')
+	.container-fulid(style='position:relative; text-align:center; padding-top:25px; padding-bottom:30px; background-color:rgba(238, 238, 238, 1); ')
+		img(src='p/congra_blue.png' alt='이벤트란' style='position:relative; width:60px; height:60px; margin-bottom:5px;')
+		div.text_blod(style='position:relative; padding-bottom:30px; font-size:30px') 여행의직구 이벤트
+		div() 푸짐한 선물들을 많이 준비하였습니다.<br> 지금 받아가세요! 롸잇나우~
+		.container
+			div(style='margin-top:60px')
+				.col-md-6
+					img(src='./p/e1.png', alt='여행자 등록', width='100%', style='position:relative')
+				.col-md-6
+					img(src='./p/e1.png', alt='여행자 등록', width='100%', style='position:relative')
+			
+	.container-fulid(style='text-align:center; margin-top:90px; margin-bottom:30px; background-color:white;')
+		.container
+			.col-md-4.text_blue(style='font-size:30px;')
+				div#buy_nums.text_blod 5,234건
+				div.text_size_index 누적 구매건수
+				br
+			.col-md-4.text_blue(style='font-size:30px;')
+				div#able_3days_nums.text_blod 302명
+				div.text_size_index 3일 이내 배송가능 여행자
+				br
+			.col-md-4.text_blue(style='font-size:30px;')
+				div#avg_deli.text_blod 5.5일
+				div.text_size_index 평균 배송 기간
+		#selet_nation_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='margin-top:250px')
+			.modal-dialog.modal-center.modal_size
+				.modal-content
+					.modal-body(style='text-align:center; ')
+						.row
+							button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+								span(aria-hidden='true') ×
+								span.sr-only Close
+						div()
+							select#select_nation1.selectpicker.show-menu-arrow
+								option(value='none' style='font-weight:bold') 지역
+								option(value='Asia') 아시아
+								option(value='SoutheastAsia') 동남아
+								option(value='America') 아메리카
+								option(value='Europe') 유럽
+								option(value='Africa') 아프리카
+								option(value='Oceania') 오세아니아
+							select#select_nation2.selectpicker(width='100px' style='width:100px; text-align:center;')
+						div(style='margin-top:30px;')
+							button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+							button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+								span.glyphicon.glyphicon-ok-circle
+								| &nbsp국가선택
+
+
+block scripts
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js')
+		script(type='text/javascript', src='/myjs.js')
+		script(type='text/javascript').
+			window.onload = function(){
+				
+			}
+			function select_nation(){
+				$('#selet_nation_modal').modal();
+			}
+			$('#select_nation1').on('change', function(){
+				//- 여기가 클릭했을때 받는값
+				a = $(this).find("option:selected").val();
+				if( a == 'Asia' )
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="KR"> 한국 </option><option value="JP"> 일본 </option><option value="CN"> 중국 </option><option value="HK"> 홍콩</option><option value="MO"> 마카오</option><option value="MN"> 몽골</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');
+				else if (a == 'SoutheastAsia')
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="TH"> 태국(타이) </option><option value="VN"> 베트남 </option><option value="la"> 라오스 </option><option value="SG"> 싱가포르</option><option value="PH"> 필리핀</option><option value="KH"> 캄보디아</option><option value="TW"> 대만</option><option value="IN"> 인도</option><option value="ID"> 인도네시아 </option><option value="MY"> 말레이시아</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');
+				else if (a == 'America')
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="US"> 미국 </option><option value="CA"> 캐나다 </option><option value="AR"> 아르헨티나 </option><option value="MX"> 멕시코</option><option value="PE"> 페루</option><option value="CL"> 칠레</option><option value="BO"> 볼리비아</option><option value="CU"> 쿠바</option><option value="BR"> 브라질</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');
+				else if (a == 'Europe')
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="FR"> 프랑스 </option><option value="GB"> 영국 </option><option value="IT"> 이탈리아 </option><option value="ES"> 스페인</option><option value="DE"> 독일</option><option value="CH"> 스위스</option><option value="CZ"> 체코</option><option value="AT"> 오스트리아</option><option value="NL"> 네덜란드</option><option value="PT"> 포르투갈</option><option value="TR"> 터키</option><option value="HR"> 크로아티아</option><option value="IS"> 아이슬란드</option><option value="HU"> 헝가리</option><option value="RU"> 러시아</option><option value="GR"> 그리스</option><option value="SE"> 스웨덴</option><option value="BE"> 벨기에</option><option value="PL"> 폴란드</option><option value="IE"> 아일랜드</option><option value="NO"> 노르웨이</option><option value="BG"> 불가리아</option><option value="RO"> 루마니아</option><option value="DK"> 덴마크</option><option value="MC"> 모나코</option><option value="LU"> 룩셈부르크</option><option value="SI"> 슬로베니아</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');
+				else if (a == 'Africa')
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="MA"> 모로코 </option><option value="TZ"> 탄자니아 </option><option value="ZA"> 남아프리카공화국 </option><option value="EG"> 이집트</option><option value="NA"> 나미비아</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');		
+				else if (a == 'Oceania')
+					$('#select_nation2').html('<option value="ALL"> 전체 </option><option value="AU"> 호주 </option><option value="NZ"> 뉴질랜드 </option><option value="GU"> 괌 </option><option value="MP"> 사이판</option>')
+					.selectpicker('refresh')
+					.selectpicker('show');
+				else
+					$('#select_nation2').selectpicker('hide');
+			});
+			
+			$('.selectpicker').selectpicker({
+				width: 140
+			});
+			

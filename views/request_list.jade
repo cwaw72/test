@@ -12,11 +12,41 @@ block request_mode_list
 block travel_mode_list
 	+travel_mode_list
 	+travel_mode_list
+
+//-배열index, 아이디, 내용, 가격, 상태 0~4 0대기 1매칭중 2진행중 3완료, 요청자 수, 문의 수, 나라, 남은 날자, 요청자 얼굴 이미지, 아이템 이미지 
+mixin add_request(index, id, content, price, status, req_nums, text_nums, nation, d_day, face, item )
+	li.item.col-sm-3.col-xs-6(style='width:262px; height:472px; background-color:white; position:relative; margin:10px; border:2px rgba(227, 227, 227, 1) solid' onclick='travel_click(#{index})')
+		img.request2_img(src= item,	alt='물건 이미지',	style='width:100%; height:260px;')
+		div(style='position:absolute; left:0px; bottom:0px; width:100%; height:216px; background-color:white;')
+			div(style='padding-left:20px; padding-right:20px; padding-top:15px; padding-bottom:15px; font-size:13px;')
+				img(src= face alt='얼굴' style='width:30px; height:30px; border-radius:15px;') 
+				div.text_blue(style='display:inline; margin-left:5px;')= id
+				div.text_dark_gray(style='display:inline') &nbsp님의 요청
+			div(style='padding-left:20px; padding-right:20px; height:50px;')= content
+			div(style='padding-left:20px; padding-right:20px; padding-top:15px; padding-bottom:20px;')
+				img(src='p/person_gray.png' style='width:15px; height:15px') 
+				div.text_gray(style='display:inline;')= req_nums
+				img(src='p/chat_gray.png' style='width:15px; height:15px; margin-left:20px;')
+				div.text_gray(style='display:inline;')= text_nums
+				div.text_blue.text_blod(style='position: relative; display:inline; float:right; font-size:20px; bottom:4px;')= price
+			div(style='border-top:rgba(227, 227, 227, 1) solid 2px; margin:0px; padding-left:20px; padding-top:14px;')
+				- if(status == 0)
+					div(style=' text-align:center; display:inline-block; color:rgba(63, 198, 24, 1); border:solid rgba(63, 198, 24, 1) 1px; width:55px;') 대기중
+				- else if(status == 1)
+					div(style=' text-align:center; display:inline-block; color:rgba(255, 162, 0, 1); border:solid rgba(255, 162, 0, 1) 1px; width:55px;') 매칭중
+				- else if(status == 1)
+					div(style=' text-align:center; display:inline-block; color:rgba(234, 96, 96, 1); border:solid rgba(234, 96, 96, 1) 1px; width:55px;') 진행중
+				- else if(status == 1)
+					div(style=' text-align:center; display:inline-block; color:rgba(130, 137, 146, 1); border:solid rgba(130, 137, 146, 1) 2px; padding-left:5px; padding-right:5px;') 완료
+				div(style=' text-align:center; display:inline-block; border:solid rgba(204, 204, 204, 1) 1px; padding-left:5px; padding-right:5px; margin-left:3px')= nation	
+				div(style=' text-align:center; display:inline-block; border:solid rgba(204, 204, 204, 1) 1px; padding-left:5px; padding-right:5px; margin-left:3px')= 'D-' + d_day
+		img(src='' alt='나도 신청' style='position:absolute; top:-5px; right:-5px; width:39px; height:39px')
+				
 // 커다란 이미지
 block main
 	// 배경 & 검색 창
-	.container-fulid(style='margin-top:50px; position:relative')
-		div(style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:100%; width:100% ')
+	.container-fulid(style='margin-top:60px; position:relative')
+		//- div(style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:100%; width:100% ')
 		// 검색창 1
 		div(style='font-size:0px; position:absolute; background-color:rgba(255,255,255,1); z-index:15; height:30%; width:80%; top:10%; left:10%;')
 			// 국가 선택
@@ -52,155 +82,19 @@ block main
 			input#itemanme.form-control.main_search.index_search_bar2(type='itemname', placeholder='상품명', style='')
 			// 검색하기 버튼
 			button.btn.btn-default.main_search.index_search_bar3(type='button', style='background-color:rgba(45, 159, 255, 1); color:white') 구매요청
-		div(style='position:absolute; background-color:rgba(255,255,255,1); z-index:15; height:30%; width:80%; top:50%; left:10%')
-		img(src='./p/b2.jpg', width='100%', alt='배경1', style='position:relative; z-index:1')
+		img(src='p/top_111.jpg', width='100%', alt='배경1', style='position:relative; z-index:1; height:100px;')
 	.container
 		// 아이템 리스트 & 상단 정렬 순 버튼
 		.row(style='padding:30px')
 			button.btn.btn-default.pull-right(type='btn', style='width:80px')	인기 순
 			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px')	가격 순
 			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px')	마감일 순
-		// 아이템 들
-		// 첫 줄
-		.row(style='margin-bottom:10px')
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-		// 첫줄
-		.row(style='margin-bottom:80px')
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
-			.col-md-3.col-xs-6(style='text-align:center')
-				// 아이템 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					img.pull-right(width='100px', src='./p/metoo.png', alt='플러스', style='position:absolute; top:-25px; right:-20px')
-					div(style='margin-left:10px; margin-top:5px;')
-						img.pull-left(width='30px', src='./p/best.png', style='margin-top:5px; border-radius:50px;')
-						div(style='margin-left:40px; text-align:left;')
-							| 오승아의 요청 
-							br
-							|	일본
-					div(style='text-align:center')
-						img(src='./p/best.png', alt='아이템', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-						div(style='color:white; background-color:rgba(45, 159, 255, 1); border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	대기 
-						h4#item_name(style='font-weight:bold;')	퍼펙트 휩 
-						h4#item_price(style='font-weight:bold; color:rgba(45, 159, 255, 1);')	25000원 
+		//-배열index, 아이디, 내용, 가격, 상태 0~4 0대기 1매칭 중 2결제 3완료, 요청자 수, 문의 수, 나라, 남은 날자, 요청자 얼굴 이미지, 아이템 이미지 
+		ul#travel_list.row.list-group(style='list-style-type:none; position:relative; text-align')
+			-for(i = 0 ; i < 8 ; i++)
+				+ add_request(i, '아이디', '캐나다구스 CANADAGOOS 유럽판 익스페디션 레드', '￦20,000', 1, 1, 2, '남아프리카공화국', 4, 'p/2.jpg', 'p/2.jpg')
+		
+						
 	// 이전 다음 pager
 	ul.pager
 		li.previous
@@ -218,3 +112,12 @@ block main
 				a(href='#') 5
 		li.next
 			a(href='#') Next
+
+block scripts
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+		script(type='text/javascript', src='/myjs.js')
+		script(type='text/javascript').
+			var money = 2312000;
+			console.log(money.toLocaleString());
+	
