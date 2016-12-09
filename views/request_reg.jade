@@ -71,7 +71,29 @@ block main
 							input#email.form-control.reg_input.placeholder_text_size(type='number', placeholder='상품 개수 선택' style='width:50%')
 							br
 							p.reg_input 상품 요청할 지역 선택하기 
-							input.form-control.reg_input.placeholder_text_size(type='text', placeholder='국가/도시이름을 입력하세요.', id='' style='width:50%')
+							div()
+								select.selectpicker(width='100px' style='width:100px; text-align:center;')
+									option(value='volvo') 배송무게
+									option(value='saab') 0
+									option(value='opel') 1
+									option(value='audi') 2
+								.dropdown(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);height:35px; width:160px;')
+									button.btn.btn-default(type='button', data-toggle='dropdown', style='height:35px; width:100%;', onmouseover='')
+										| 도시
+										span.caret
+									ul.dropdown-menu(style='width:120px;')
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold; ') 아시아
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold') 동남아
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold') 아메리카
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold') 유럽
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold') 아프리카
+										li
+											a(href='#', style='font-size:0.5rem; font-weight:bold') 오세아니아
 							br
 							p.reg_input 만료일 선택 
 							input.form-control.reg_input.placeholder_text_size(type='date', min='2016-10-31', placeholder='만료일을 선택하세요.', id='' style='width:50%')
@@ -112,7 +134,7 @@ block main
 						//- 여기에 여행자 리스트 뿌려주면됨
 						ul#travel_list.row.list-group(style='list-style-type:none; position:relative')
 							-for(i = 0 ; i < 8 ; i++)
-								+ add_travel(i, '아이디', i, '출발지', '도착지', '출발일', '도착일', 'p/2.jpg', '일본', 4)
+								+ add_travel(i, '아이디', '평점', '출발지', '도착지', '출발일', '도착일', 'p/2.jpg', '일본', 4)
 
 					div(style='margin-bottom:50px; text-align:center')
 						button.btn.btn-default.background_blue.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="location.href='request_reg2'")
@@ -208,6 +230,7 @@ block main
 block scripts
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js')
 	script(type='text/javascript', src='myjs.js')
 	link(href='library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
 	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
@@ -307,7 +330,17 @@ block scripts
 			event.stopPropagation();
 		}
 		
+		function open_dropdown(){
+			$('#drop_open').dropdown('toggle');
+			$('#drop_open2').dropdown('toggle');
+		}
 		
+		$('.selectpicker').selectpicker({
+			style: 'btn-info',
+			size: 1,
+			width: 140
+		});
+
 		
 		//메뉴창
 		window.onload = function(){

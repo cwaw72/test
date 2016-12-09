@@ -52,11 +52,11 @@ block main
 				form.form-inline.jun(style='text-align:center; display:inline-block; font-size:0px; padding-top:30px; padding-bottom:30px; margin:0px; height:100%; ')
 					.container
 						//- 국가 선택
-						li.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);	height:50px; width:20%; border-top-left-radius:5px; border-bottom-left-radius:5px')
+						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);	height:50px; width:20%; border-top-left-radius:5px; border-bottom-left-radius:5px')
 							button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%;  border-top-left-radius:5px;  border-bottom-left-radius:5px;')
 								| 전체 국가
 								span.caret
-							ul.dropdown-menu(style='text-align:center; ')
+							ul.dropdown-menu(style='text-align:center; width:100% ')
 								li
 									a(href='#', style='font-size:0.6rem; font-weight:bold; ') 한국
 								li
@@ -67,7 +67,7 @@ block main
 									a(href='#', style='font-size:0.6rem; font-weight:bold') 유럽
 								li
 									a(href='#', style='font-size:0.6rem; font-weight:bold') 아프리카
-						li.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1); height:50px; width:20%')
+						.dropdown.index_search_bar(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1); height:50px; width:20%')
 							button.btn.btn-default.main_search(type='button', data-toggle='dropdown', style='width:100%; ')
 								| 만료일
 								span.caret
