@@ -72,28 +72,15 @@ block main
 							br
 							p.reg_input 상품 요청할 지역 선택하기 
 							div()
-								select.selectpicker(width='100px' style='width:100px; text-align:center;')
-									option(value='volvo') 배송무게
-									option(value='saab') 0
-									option(value='opel') 1
-									option(value='audi') 2
-								.dropdown(style='positio:relative; display:inline-block; background-color:rgba( 255, 255, 255, 1);height:35px; width:160px;')
-									button.btn.btn-default(type='button', data-toggle='dropdown', style='height:35px; width:100%;', onmouseover='')
-										| 도시
-										span.caret
-									ul.dropdown-menu(style='width:120px;')
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold; ') 아시아
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold') 동남아
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold') 아메리카
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold') 유럽
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold') 아프리카
-										li
-											a(href='#', style='font-size:0.5rem; font-weight:bold') 오세아니아
+								select#select_nation1.selectpicker.show-menu-arrow
+									option(value='none' style='font-weight:bold') 지역
+									option(value='Asia') 아시아
+									option(value='SoutheastAsia') 동남아
+									option(value='America') 아메리카
+									option(value='Europe') 유럽
+									option(value='Africa') 아프리카
+									option(value='Oceania') 오세아니아
+								select#select_nation2.selectpicker(width='100px' style='width:100px; text-align:center;')
 							br
 							p.reg_input 만료일 선택 
 							input.form-control.reg_input.placeholder_text_size(type='date', min='2016-10-31', placeholder='만료일을 선택하세요.', id='' style='width:50%')
@@ -336,9 +323,45 @@ block scripts
 		}
 		
 		$('.selectpicker').selectpicker({
-			style: 'btn-info',
-			size: 1,
 			width: 140
+		});
+		
+		$('#select_nation2').selectpicker('hide');
+		
+		$('#select_nation1').on('change', function(){
+			//- 여기가 클릭했을때 받는값
+			a = $(this).find("option:selected").val();
+			if( a == 'Asia' )
+				$('#select_nation2').html('<option value="KR"> 한국 </option><option value="JP"> 일본 </option><option value="CN"> 중국 </option><option value="HK"> 홍콩</option><option value="MO"> 마카오</option><option value="MN"> 몽골</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'SoutheastAsia')
+				$('#select_nation2').html('<option value="TH"> 태국(타이) </option><option value="VN"> 베트남 </option><option value="la"> 라오스 </option><option value="SG"> 싱가포르</option><option value="PH"> 필리핀</option><option value="KH"> 캄보디아</option><option value="TW"> 대만</option><option value="IN"> 인도</option><option value="ID"> 인도네시아 </option><option value="MY"> 말레이시아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'America')
+				$('#select_nation2').html('<option value="US"> 미국 </option><option value="CA"> 캐나다 </option><option value="AR"> 아르헨티나 </option><option value="MX"> 멕시코</option><option value="PE"> 페루</option><option value="CL"> 칠레</option><option value="BO"> 볼리비아</option><option value="CU"> 쿠바</option><option value="BR"> 브라질</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'Europe')
+				$('#select_nation2').html('<option value="FR"> 프랑스 </option><option value="GB"> 영국 </option><option value="IT"> 이탈리아 </option><option value="ES"> 스페인</option><option value="DE"> 독일</option><option value="CH"> 스위스</option><option value="CZ"> 체코</option><option value="AT"> 오스트리아</option><option value="NL"> 네덜란드</option><option value="PT"> 포르투갈</option><option value="TR"> 터키</option><option value="HR"> 크로아티아</option><option value="IS"> 아이슬란드</option><option value="HU"> 헝가리</option><option value="RU"> 러시아</option><option value="GR"> 그리스</option><option value="SE"> 스웨덴</option><option value="BE"> 벨기에</option><option value="PL"> 폴란드</option><option value="IE"> 아일랜드</option><option value="NO"> 노르웨이</option><option value="BG"> 불가리아</option><option value="RO"> 루마니아</option><option value="DK"> 덴마크</option><option value="MC"> 모나코</option><option value="LU"> 룩셈부르크</option><option value="SI"> 슬로베니아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'Africa')
+				$('#select_nation2').html('<option value="MA"> 모로코 </option><option value="TZ"> 탄자니아 </option><option value="ZA"> 남아프리카공화국 </option><option value="EG"> 이집트</option><option value="NA"> 나미비아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');		
+			else if (a == 'Oceania')
+				$('#select_nation2').html('<option value="AU"> 호주 </option><option value="NZ"> 뉴질랜드 </option><option value="GU"> 괌 </option><option value="MP"> 사이판</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else
+				$('#select_nation2').selectpicker('hide');
+		});
+		$('#select_nation2').on('change', function(){
+			//- 여기가 클릭했을때 받는값
+			b = $(this).find("option:selected").val();
+			alert(b);			
 		});
 
 		
