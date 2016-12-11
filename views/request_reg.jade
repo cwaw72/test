@@ -1,9 +1,9 @@
-extends ./layout
+extends layout
 
 block styles
 	link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
 	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css')
-	link(rel='stylesheet', type='text/css', href='./css/mystyle.css')
+	link(rel='stylesheet', type='text/css', href='/css/mystyle.css')
 	link(rel="stylesheet",href="/css/login_form.css")
 	link(rel="stylesheet",href="/css/menu_side.css")
 	link(rel='stylesheet', href='/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')
@@ -27,7 +27,7 @@ mixin add_travel(index, id, avg, start, arrive, when_s, when_a, face, nation, d_
 				div(style='display:inline')= arrive
 			div.text_gray()= when_s
 				div(style='display:inline')= when_a
-		img.item_check(src='p/check_gray.png' style='position:absolute; top:10px; right:10px; width:35px' onclick='check_click(#{index})')
+		img.item_check(src='/p/check_gray.png' style='position:absolute; top:10px; right:10px; width:35px' onclick='check_click(#{index})')
 		div(style='position:absolute; bottom:0px; right:40px; border: solid 1px gray; width:40px; text-align:center')= nation
 		div(style='position:absolute; bottom:0px; right:0px; border: solid 1px gray; width:40px; text-align:center')= 'D-'+d_day
 		
@@ -35,20 +35,20 @@ mixin add_travel(index, id, avg, start, arrive, when_s, when_a, face, nation, d_
 block main
 	// main context
 	.container-fulid
-		img(src='p/b1.jpg' style='width:100%; margin-top:50px;')
+		img(src='/p/b1.jpg' style='width:100%; margin-top:50px;')
 	.reg_main
 		.container
-			div(style='text-align:left; font-size:1rem; font-weight:bold; color:rgba(0, 0, 0, 0.7); border-bottom: 2px solid black;  padding-bottom:15px; padding-top:15px;')
-				img(src='/p/shopping_dark_gray2.png' alt='request' style='width:35px')
-				|  구매요청 등록
-				div(style='display:inline; font-size:14px; color:rgba(0, 0, 0, 0.5)') 여행자에게 부탁할 물품을 등록하고 저렴하게 겟하세요!
-			// 현재 상황 이미지
-			.hidden-xs(style='margin-top:40px')
-			div(style='margin-left:10%; margin-right:10%; background-color:white;')
-				div.header_jun(style='border-bottom:1px solid gray; padding:20px') 01
-					div(style='color:rgba(0, 0, 0, 0.75); display:inline') 정보 입력 
-				div.row(style='padding:20px')
-					form(action='', method='post', enctype='multipart/form-data', style='')
+			form#abc(action='', method='post', enctype='multipart/form-data', style='')
+				div(style='text-align:left; font-size:1rem; font-weight:bold; color:rgba(0, 0, 0, 0.7); border-bottom: 2px solid black;  padding-bottom:15px; padding-top:15px;')
+					img(src='/p/shopping_dark_gray2.png' alt='request' style='width:35px')
+					|  구매요청 등록
+					div(style='display:inline; font-size:14px; color:rgba(0, 0, 0, 0.5)') 여행자에게 부탁할 물품을 등록하고 저렴하게 겟하세요!
+				// 현재 상황 이미지
+				.hidden-xs(style='margin-top:40px')
+				div(style='margin-left:10%; margin-right:10%; background-color:white;')
+					div.header_jun(style='border-bottom:1px solid gray; padding:20px') 01
+						div(style='color:rgba(0, 0, 0, 0.75); display:inline') 정보 입력 
+					div.row(style='padding:20px')
 						//- 이미지 등록 & 기본 정보 입력 란
 						#reg_picture.col-xs-12.col-sm-5(style='text-align:center')
 							input#input-image-2(name="inputdim1[]" type="file" multiple accept="image/*")
@@ -63,12 +63,13 @@ block main
 							input#email.form-control.reg_input.placeholder_text_size(type='name', placeholder='상품명')
 							div.reg_input(style='margin-top:10px;')
 								button.btn.btn-default(type='button' style='')
-									img(src='p/link_dark_gray.png' style='width:15px')
+									img(src='/p/link_dark_gray.png' style='width:15px')
 									| 링크 걸기
 								input.form-control.reg_input.placeholder_text_size(type='name', placeholder='여행자가 참고할 물품 링크를 입력해주세요.', id='' style='position:relative; display:inline-block; width:70%;')
 							br
-							p.reg_input 상품 수량 선택 
-							input#email.form-control.reg_input.placeholder_text_size(type='number', placeholder='상품 개수 선택' style='width:50%')
+							div.reg_input(style='width:45%; display:inline-block;') 상품 수량 선택
+							div.reg_input(style='width:45%; display:inline-block;;') 베송 방법 
+							input#email.form-control.reg_input.placeholder_text_size(type='number', placeholder='상품 개수 선택' style='width:30%')
 							br
 							p.reg_input 상품 요청할 지역 선택하기 
 							div()
@@ -88,146 +89,154 @@ block main
 							p.reg_input 가격 제시 
 							input.form-control.reg_input.placeholder_text_size(type='text', placeholder='가격을 제시해 주세요.', id='' style='width:50%')
 							br
+							//- p.reg_input 배송 방법 
+							//- input.form-control.reg_input.placeholder_text_size(type='text', placeholder='가격을 제시해 주세요.', id='' style='width:50%')
+							//- br
 							p.reg_input(style='') 기타요청 사항 
 							textarea.form-control.reg_input.placeholder_text_size(placeholder='여행자가 참고할 만한 상품에 대한 자세한 설명 (색상, 상품번호 등)을 적어주세요. \n수령받을 방법에 대해서도 적어주세요.', id='', style='height:150px;')
-				//- 여행자 선택
-				div.header_jun#reg_req_effeft(style='border-bottom:2px solid gray; padding:20px') 02
-					div(style='color:rgba(0, 0, 0, 0.75); display:inline') 여행자 선택
-						div(style='position:relative; display:inline-block; left:-15px; font-size:12px; float:right; top:20px;')
-							button#open_btn.btn.btn-default.text_blod(type='button' style='position:relative; bottom:14px; left:10px; color:white; background-color:rgba(0, 174, 239, 1); width:190px; height:50px;') 
-								| 여행자 매칭 받기&nbsp
-								span.glyphicon.glyphicon-menu-down(style='color:white;')
-							button#close_btn.btn.btn-default.text_blod(type='button' style='position:relative; bottom:14px; left:20px; color:white; background-color:rgba(255, 186, 0, 1); width:190px; height:50px;') 
-								| 전체 지원 받기&nbsp
-								span.glyphicon.glyphicon-menu-down(style='color:white;')
-				//- 여행자 선택 기능
-				div#close_chose_travel(style='padding:30px; border-bottom:1px solid gray; display:block')
-					div(style='color:red;') ※ 
-						div(style='color:black; display:inline;') 구매요청 사항에 매칭되는 여행자를 위 여행자 매칭 받기 버튼을 통해 직접 선택하실 수 있습니다.
-					div(style='color:red; ') ※ 
-						div(style='color:black; display:inline;') 여행자 선택 없이 구매요청 리스트에 올려, 더 많은 여행자들의 지원을 원하시면, 위 전체 지원 받기 버튼을 눌러주세요.
+					//- 여행자 선택
+					div.header_jun#reg_req_effeft(style='border-bottom:2px solid gray; padding:20px') 02
+						div(style='color:rgba(0, 0, 0, 0.75); display:inline') 여행자 선택
+							div(style='position:relative; display:inline-block; left:-15px; font-size:12px; float:right; top:20px;')
+								button#open_btn.btn.btn-default.text_blod(type='button' style='position:relative; bottom:14px; left:10px; color:white; background-color:rgba(0, 174, 239, 1); width:190px; height:50px;') 
+									| 여행자 매칭 받기&nbsp
+									span.glyphicon.glyphicon-menu-down(style='color:white;')
+								button#close_btn.btn.btn-default.text_blod(type='button' style='position:relative; bottom:14px; left:20px; color:white; background-color:rgba(255, 186, 0, 1); width:190px; height:50px;') 
+									| 전체 지원 받기&nbsp
+									span.glyphicon.glyphicon-menu-down(style='color:white;')
+					//- 여행자 선택 기능
+					div#close_chose_travel(style='padding:30px; border-bottom:1px solid gray; display:block')
+						div(style='color:red;') ※ 
+							div(style='color:black; display:inline;') 구매요청 사항에 매칭되는 여행자를 위 여행자 매칭 받기 버튼을 통해 직접 선택하실 수 있습니다.
+						div(style='color:red; ') ※ 
+							div(style='color:black; display:inline;') 여행자 선택 없이 구매요청 리스트에 올려, 더 많은 여행자들의 지원을 원하시면, 위 전체 지원 받기 버튼을 눌러주세요.
 
-				div#open_chose_travel(style='padding:30px; border-bottom:1px solid gray; display:none')
-					div()
-						button.btn.btn-default(type='button') 전체 선택
-						div(style='display:inline-block') 요청사항에 매칭되는 여행자 
-						div.text_blue(style='display:inline;' ) 총
-						div#travel_nums.text_blue(style='display:inline;') 8
-						div.text_blue(style='display:inline;') 명/
-						div#selet_nums.text_blue(style='display:inline;') 0
-						div.text_blue(style='display:inline;') 명
-						div(style='display:inline;') 선택
-					div(style='')
-						//- 여기에 여행자 리스트 뿌려주면됨
-						ul#travel_list.row.list-group(style='list-style-type:none; position:relative')
-							-for(i = 0 ; i < 8 ; i++)
-								+ add_travel(i, '아이디', '평점', '출발지', '도착지', '출발일', '도착일', 'p/2.jpg', '일본', 4)
-
-					div(style='margin-bottom:50px; text-align:center')
-						button.btn.btn-default.background_blue.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="location.href='request_reg2'")
-							span.glyphicon.glyphicon-ok
-							|	선택 여행자에게 요청하기
-				div#open_reg_request(style='padding:30px; border-bottom:1px solid gray; display:none;')
-					div(style='display:block;') - 본인이
-						div.text_blue(style='display:inline;') 여행자를 직접 선택하길 원하시면, 여행자 매칭 받기를 선택
-						div(style='display:inline;') 해 주세요.
-					div(style='display:block;') - 여행자 선택하지 않고 구매요청 리스트에 올려 
-						div.text_blue(style='display:inline;') 전체 여행자들의 지원을 받고싶다면 
-						div(style='display:inline;') 아래 
-						div.text_blue(style='display:inline;') 완료 버튼
-						div(style='display:inline;') 을 클릭하시면 등록이 완료됩니다.
-					div(style='margin-bottom:50px; text-align:center')
-						button.btn.btn-default.background_yellow.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="location.href='request_reg2'")
-							span.glyphicon.glyphicon-ok
-							|	구매요청 리스트 등록하기
-			#user_info.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-				.modal-dialog.modal-center.modal_size
-					.modal-content
-						.modal-body(style='text-align:center; ')
-							.row
-								button.close(type='button', data-dismiss='modal')
-									span(aria-hidden='true') ×
-									span.sr-only Close
-							img#modal_face(src='', alt='face', width='120px', height='120px', style='border-radius:60px;')
-							div()
-								#modal_star() 평점
-							// 이름
-							div(style='font-weight:bold; display:block;')
-								#modal_name.text_blue(style='display:inline; font-size:16px;') 윰쓰
-							// 사는곳 & 가입날짜
-							//- div(style='font-weight:bold; display:block; padding:5px')
-							//- 	#user_living_nation(style='display:inline') 서울
-							//- 	| /
-							//- 	#user_living_city(style='display:inline') 한국
-							// 거래 수
-							div(style='font-weight:bold; display:block; text-align:center; padding:5px')
-								div(style='display:inline-block')  요청 
-								#modal_req_nums(style='display:inline-block')  9개 
-								div(style='display:inline-block; margin-left:10px')  완료 
-								#modal_suc_nums(style='display:inline-block')  15개 
-								div(style='display:inline-block;  margin-left:10px')  리뷰 
-								#modal_review_nums(style='display:inline-block')  9명 
-							// 소개
-							div(style='font-weight:bold; display:block; padding:5px; margin-left:30px; margin-right:30px; padding-bottom:15px')
-								#modal_introduce.text_gray(style='display:inline-block; font-size:12px;')  누구보다 빠르게 남들보다 다르게 색다르게 배달을 완료하는 춤추는 방랑자 윰쓰입니다! 
-							//- div(style='')
-							//- 	img(src='')
-							//- 	| 이메일주소 인증 완료 
-							//- 	img(src='')
-							//- 	| 전화번호 인증 완료 
-							div(style='border-top:1px solid gray')
-								div.text_blod(style='text-align:initial; padding:5px') 항공권
-								div(style=' font-size:16px;')
-									#lets_go1(style='padding:10px;')
-										div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
-											span.glyphicon.glyphicon-map-marker(style='float:left;') 
-											div#lets_go1_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px; ') 한국 
-											span.glyphicon.glyphicon-arrow-right
-											div#lets_go1_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
-												span.glyphicon.glyphicon-map-marker
-										div.text_size2(style=' background-color:white; padding:5px;')
-											div#lets_go1_start_date(style='display:inline-block; float:left') 2016.11.21 
-											div#lets_go1_arrive_date(style='display:inline; float:right;') 2016.11.21 
-									#lets_go2(style='padding:10px; margin-top:10px;')
-										div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
-											span.glyphicon.glyphicon-map-marker(style='float:left;')
-											div#lets_go2_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px;') 한국 
-											span.glyphicon.glyphicon-arrow-right
-											div#lets_go2_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
-												span.glyphicon.glyphicon-map-marker
-										div.text_size2(style=' background-color:white; padding:5px;')
-											div#lets_go2_start_date(style='display:inline-block; float:left') 2016.11.21 
-											div#lets_go2_arrive_date(style='display:inline; float:right;') 2016.11.21 
-							div(style='background-color:white; margin-top:10px ;')
-								div.text_blod(style='text-align:initial; padding:5px; margin-top:15px;') 가격한도
-									div(style='background-color:white; margin-top:10px; position:relative; height:50px')
-										div.text_gray(style='position:absolute;') 0원
-										div#limit_price.text_gray(style='position:absolute; right:0px') 100원
-										.text-center.progress(style='height:10px')
-											.progress-bar(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style='width:70%')
-										// 현재가격
-										div#cal_price.text_blue(style='position:absolute; left:70%; top:40px') 70원
-							div(style='margin-top:30px;')
-								button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
-								button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
-									span.glyphicon.glyphicon-ok-circle
-									| &nbsp여행자 선택
+					div#open_chose_travel(style='padding:30px; border-bottom:1px solid gray; display:none')
+						div()
+							button.btn.btn-default(type='button') 전체 선택
+							div(style='display:inline-block') 요청사항에 매칭되는 여행자 
+							div.text_blue(style='display:inline;' ) 총
+							div#travel_nums.text_blue(style='display:inline;') 8
+							div.text_blue(style='display:inline;') 명/
+							div#selet_nums.text_blue(style='display:inline;') 0
+							div.text_blue(style='display:inline;') 명
+							div(style='display:inline;') 선택
+						div(style='')
+							//- 여기에 여행자 리스트 뿌려주면됨
+							ul#travel_list.row.list-group(style='list-style-type:none; position:relative')
+								-for(i = 0 ; i < 8 ; i++)
+									+ add_travel(i, '아이디', '평점', '출발지', '도착지', '출발일', '도착일', '/p/2.jpg', '일본', 4)
+								
+						div(style='margin-bottom:50px; text-align:center')
+							button.btn.btn-default.background_blue.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="send()")
+								span.glyphicon.glyphicon-ok
+								|	선택 여행자에게 요청하기
+					div#open_reg_request(style='padding:30px; border-bottom:1px solid gray; display:none;')
+						div(style='display:block;') - 본인이
+							div.text_blue(style='display:inline;') 여행자를 직접 선택하길 원하시면, 여행자 매칭 받기를 선택
+							div(style='display:inline;') 해 주세요.
+						div(style='display:block;') - 여행자 선택하지 않고 구매요청 리스트에 올려 
+							div.text_blue(style='display:inline;') 전체 여행자들의 지원을 받고싶다면 
+							div(style='display:inline;') 아래 
+							div.text_blue(style='display:inline;') 완료 버튼
+							div(style='display:inline;') 을 클릭하시면 등록이 완료됩니다.
+						div(style='margin-bottom:50px; text-align:center')
+							button.btn.btn-default.background_yellow.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="location.href='request_reg2'")
+								span.glyphicon.glyphicon-ok
+								|	구매요청 리스트 등록하기
+				
+			form#send_form(action='form_action.asp'  method='post' enctype='multipart/form-data' style='display:none;')
+					#send()
+			
+			
+				#user_info.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+					.modal-dialog.modal-center.modal_size
+						.modal-content
+							.modal-body(style='text-align:center; ')
+								.row
+									button.close(type='button', data-dismiss='modal')
+										span(aria-hidden='true') ×
+										span.sr-only Close
+								img#modal_face(src='', alt='face', width='120px', height='120px', style='border-radius:60px;')
+								div()
+									#modal_star() 평점
+								// 이름
+								div(style='font-weight:bold; display:block;')
+									#modal_name.text_blue(style='display:inline; font-size:16px;') 윰쓰
+								// 사는곳 & 가입날짜
+								//- div(style='font-weight:bold; display:block; padding:5px')
+								//- 	#user_living_nation(style='display:inline') 서울
+								//- 	| /
+								//- 	#user_living_city(style='display:inline') 한국
+								// 거래 수
+								div(style='font-weight:bold; display:block; text-align:center; padding:5px')
+									div(style='display:inline-block')  요청 
+									#modal_req_nums(style='display:inline-block')  9개 
+									div(style='display:inline-block; margin-left:10px')  완료 
+									#modal_suc_nums(style='display:inline-block')  15개 
+									div(style='display:inline-block;  margin-left:10px')  리뷰 
+									#modal_review_nums(style='display:inline-block')  9명 
+								// 소개
+								div(style='font-weight:bold; display:block; padding:5px; margin-left:30px; margin-right:30px; padding-bottom:15px')
+									#modal_introduce.text_gray(style='display:inline-block; font-size:12px;')  누구보다 빠르게 남들보다 다르게 색다르게 배달을 완료하는 춤추는 방랑자 윰쓰입니다! 
+								//- div(style='')
+								//- 	img(src='')
+								//- 	| 이메일주소 인증 완료 
+								//- 	img(src='')
+								//- 	| 전화번호 인증 완료 
+								div(style='border-top:1px solid gray')
+									div.text_blod(style='text-align:initial; padding:5px') 항공권
+									div(style=' font-size:16px;')
+										#lets_go1(style='padding:10px;')
+											div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
+												span.glyphicon.glyphicon-map-marker(style='float:left;') 
+												div#lets_go1_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px; ') 한국 
+												span.glyphicon.glyphicon-arrow-right
+												div#lets_go1_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
+													span.glyphicon.glyphicon-map-marker
+											div.text_size_nomal(style=' background-color:white; padding:5px;')
+												div#lets_go1_start_date(style='display:inline-block; float:left') 2016.11.21 
+												div#lets_go1_arrive_date(style='display:inline; float:right;') 2016.11.21 
+										#lets_go2(style='padding:10px; margin-top:10px;')
+											div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
+												span.glyphicon.glyphicon-map-marker(style='float:left;')
+												div#lets_go2_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px;') 한국 
+												span.glyphicon.glyphicon-arrow-right
+												div#lets_go2_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
+													span.glyphicon.glyphicon-map-marker
+											div.text_size_nomal(style=' background-color:white; padding:5px;')
+												div#lets_go2_start_date(style='display:inline-block; float:left') 2016.11.21 
+												div#lets_go2_arrive_date(style='display:inline; float:right;') 2016.11.21 
+								div(style='background-color:white; margin-top:10px ;')
+									div.text_blod(style='text-align:initial; padding:5px; margin-top:15px;') 가격한도
+										div(style='background-color:white; margin-top:10px; position:relative; height:50px')
+											div.text_gray(style='position:absolute;') 0원
+											div#limit_price.text_gray(style='position:absolute; right:0px') 100원
+											.text-center.progress(style='height:10px')
+												.progress-bar(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style='width:70%')
+											// 현재가격
+											div#cal_price.text_blue(style='position:absolute; left:70%; top:40px') 70원
+								div(style='margin-top:30px;')
+									button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+									button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+										span.glyphicon.glyphicon-ok-circle
+										| &nbsp여행자 선택
 
 
 block scripts
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js')
-	script(type='text/javascript', src='myjs.js')
-	link(href='library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
-	script(src='library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
-	script(src='library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
-	script(type='text/javascript', src='./bower_components/moment/min/moment.min.js')
-	script(type='text/javascript', src='./bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
+	script(type='text/javascript', src='/myjs.js')
+	link(href='/library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
+	script(src='/library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
+	script(type='text/javascript', src='/bower_components/moment/min/moment.min.js')
+	script(type='text/javascript', src='/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
 	script(type='text/javascript').
 		//- 객체들
 		var selet_nums = document.getElementById("selet_nums");	//여행자들이 선택된 수
@@ -275,7 +284,7 @@ block scripts
 			//- lets_go2_start_date
 			//- lets_go2_arrive_date
 			//- limit_price 
-			modal_face.src = 'p/2.jpg'
+			modal_face.src = '/p/2.jpg'
 			static_index = index;
 			$('#user_info').modal();
 		}
@@ -307,7 +316,7 @@ block scripts
 			if( bool_check_list[index] == 1){
 				bool_check_list[index] = 0;
 				selet_nums.innerHTML--;
-				check_list[index].src = 'p/check_gray.png';
+				check_list[index].src = '/p/check_gray.png';
 			}
 			else {
 				bool_check_list[index] = 1;
@@ -316,6 +325,15 @@ block scripts
 			}			
 			event.stopPropagation();
 		}
+
+		function send(){
+			for(i = 0 ; i < bool_check_list.length; i ++){
+				if(bool_check_list[i] == 1)
+					$('#send').append("<input name='" + i +"' value='" + '여기에 여행자 아이디 입력' + "'> </input>");
+			}
+			document.getElementById("send_form").submit();
+		}		
+		
 		
 		function open_dropdown(){
 			$('#drop_open').dropdown('toggle');
@@ -378,7 +396,7 @@ block scripts
 					showCaption: false,
 					removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
 			    allowedFileExtensions: ["jpg", "png", "gif"],
-					defaultPreviewContent: '<img src="./p/1.jpg" alt="Your Avatar" style="width:100%; height:180px"><h6 class="text-muted">Click to select</h6>',
+					defaultPreviewContent: '<img src="/p/1.jpg" alt="Your Avatar" style="width:100%; height:180px"><h6 class="text-muted">Click to select</h6>',
 					layoutTemplates: {actions: '{delete}'},
 			    maxImageHeight: 150,
 			    maxFileCount: 3,
@@ -389,7 +407,7 @@ block scripts
 			//-     $('#kv-success-box').append(data.response.link);
 			//-     $('#kv-success-modal').modal('show');
 			});
-			
+
 			$(function () {
 				$('#end_datetimepicker1').datetimepicker();
 			});

@@ -33,6 +33,49 @@ cccccc    (204, 204, 204, 1)
 회색        999999   (153, 153, 153, 1)
 
 */
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 5px solid black;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(45, 159, 255, 1);
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+
+  border-left: 60px solid green;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+
+  border-right:10px solid blue;
+}
+
+.text_caution{
+  color:rgba(255, 77, 0, 1);
+}
+
+.request_info_text_area{
+  padding-bottom:2px
+}
+
 .text_size1{
   font-size:18px;
 }
@@ -54,6 +97,7 @@ cccccc    (204, 204, 204, 1)
 .text_yellow{
   color:rgba(255, 186, 0, 1);
 }
+
 .text_blod{
   font-weight:bold;
 }
@@ -69,7 +113,9 @@ cccccc    (204, 204, 204, 1)
 .background_yellow{
   background-color:rgba(255, 186, 0, 1);
 }
-
+.background_red{
+  background-color:rgba(234, 96, 96, 1);
+}
 .placeholder_text_size{
   font-size:12px;
 }

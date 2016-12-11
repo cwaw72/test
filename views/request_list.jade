@@ -13,7 +13,7 @@ block travel_mode_list
 	+travel_mode_list
 	+travel_mode_list
 
-//-배열index, 아이디, 내용, 가격, 상태 0~4 0대기 1매칭중 2진행중 3완료, 요청자 수, 문의 수, 나라, 남은 날자, 요청자 얼굴 이미지, 아이템 이미지 
+//-배열index, 아이디, 내용, 가격, 상태 0~4 //- 상태 0~4 0대기 1매칭중 2진행중(결제 대기) 3 결제완료 4 완료, 요청자 수, 문의 수, 나라, 남은 날자, 요청자 얼굴 이미지, 아이템 이미지 
 mixin add_request(index, id, content, price, status, req_nums, text_nums, nation, d_day, face, item )
 	li.item.col-sm-3.col-xs-6(style='width:262px; height:472px; background-color:white; position:relative; margin:10px; border:2px rgba(227, 227, 227, 1) solid' onclick='travel_click(#{index})')
 		img.request2_img(src= item,	alt='물건 이미지',	style='width:100%; height:260px;')
