@@ -129,16 +129,16 @@ cccccc    (204, 204, 204, 1)
 }
 .kv-avatar .file-input {
     display: table-cell;
-    max-width: 220px;
+    max-width: 400px;
 }
-
-.text-center{
+/*
+/*.text-center{
   position: absolute;
   left: 0;
   top: 50%;
   width: 100%;
   text-align: center;
-}
+}*/*/
 
 /*-------------------------------*/
 /*            index              */

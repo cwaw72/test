@@ -31,7 +31,7 @@ block travel_mode_list
 
 	//- 거래현황
 	//- 상태 0~4 0대기 1매칭중 2진행중(결제 대기) 3 결제완료 4 완료,
-	-var dealing_status = '0';
+	-var dealing_status = '1';
 	
 	//- 결제 완료 후 수령 상태 0둘다 안받음 1여행자가 줌 2요청자가 받음 
 	-var dealing_receive_status = '0';
@@ -43,15 +43,19 @@ block travel_mode_list
 	-var dealing_price = '';
 	
 	//- 거래 영수증 상태 0아직 안 등록 1등록
-	-var dealing_receipt_status = '0';
-	-var dealing_receipt_img = '';
+	-var dealing_receipt_status = '1';
+	-var dealing_receipt_img = '/p/2.jpg';
 	
 	//- 0 입력안함 1 직거래 2 배송
-	-var dealing_shipping_method = '0';
+	-var dealing_shipping_method = '2';
 	-var dealing_ship_number = '0000-000000-000000';
 	
 	//- 들어온 사람이 누군가 0아무나 1요청자 2지원 여행자
-	-var who = '0';
+	-var who = '2';
+	
+	
+	//- qna 질문 수
+	-var qna_nums = '4';
 
 	//- 유저 유니크 아이디, 유저 이름, 유저 얼굴, 유저 평균, 글 내용, 요구 가격 
 	mixin add_travel_request(user_id, user_name, user_face, user_avg, user_content, req_price)
@@ -62,6 +66,25 @@ block travel_mode_list
 				div(style='padding-top:5px; color:black; position:absolute; width:210px; height:50px;  overflow:hidden; text-overflow:ellipsis;')= user_content
 			div.text_blod.background_yellow(style='position:absolute; color: white; font-size:16px; right:0px; padding-left:10px; padding-top:3px; bottom:20px; height:30px; width:100px;')= '￦ ' + req_price
 				div(style='position:absolute; width:0; height:0; left:-15px; top:0px;  border-top: 15px solid rgba(255, 186, 0, 1); border-bottom: 15px solid rgba(255, 186, 0, 1); border-left: 15px solid transparent;')
+
+	mixin add_other_qna(user_name, user_face, user_content, time)
+		li(style=' position:relative; margin-top:10px;  margin-bottom:10px;')
+			img(src= user_face, alt='face', style='top:0px; left:0px; width:60px; height:60px; border-radius:30px; position:absolute;  margin-top:0px; margin-left:10px; margin-right:10px;')
+			div(style='position:relative; display:inline-block; width:445px; padding-left:10px; margin-left:80px; margin-right:80px; ')
+				div.text_blue(style='display:inline-block; position:absolute; top:0px; left:5px')= user_name
+				div(style='display:inline-block; background-color:white; position:relative; width:420px; margin-top:30px; left:0px; padding-bottom:40px; padding-left:20px; padding-right:20px; padding-top:10px; border-radius:5px; border-top-left-radius:0px;')= user_content
+					div(style='position:absolute; top:0px; left:-10px; width:0; height:0; border-top:10px solid white; border-bottom: 10px solid transparent; border-left: 10px solid transparent;')
+				div(style='display:inline-block; color:rgba(153, 153, 153, 1); position:absolute; bottom:10px; left:20px; padding-left:10px; padding-right:10px;')= time
+
+	mixin add_host_qna(user_name, user_face, user_content, time)
+		li(style=' position:relative; margin-top:10px; margin-bottom:10px;')
+			img(src= user_face, alt='face', style='top:0px; right:0px; width:60px; height:60px; border-radius:30px; position:absolute;  margin-top:0px; margin-left:10px; margin-right:10px;')
+			div(style='position:relative; display:inline-block; width:445px; padding-right:10px; margin-left:80px; margin-right:80px; ')
+				div.text_blue(style='display:inline-block; position:absolute; top:0px; right:5px')= user_name
+				div.background_blue(style='text-align:right; color:white; display:inline-block; position:relative; width:420px; margin-top:30px; left:10px; padding-bottom:40px; padding-left:20px; padding-right:20px; padding-top:10px; border-radius:5px; border-top-right-radius:0px;')= user_content
+					div(style='position:absolute; top:0px; right:-10px; width:0; height:0; border-top:10px solid rgba(0, 174, 239, 1); border-bottom: 10px solid transparent; border-right: 10px solid transparent;')
+				div(style='display:inline-block; color:rgba(204, 204, 204, 1); position:absolute; bottom:10px; right:20px; padding-left:10px; padding-right:10px;')= time
+
 
 
 block main
@@ -108,20 +131,26 @@ block main
 		// Q&A, 리뷰
 		.row(style='padding-bottom:90px; text-align:center; margin-top:50px;')
 			.col-md-8.col-xs-12
-				div(style=' text-align:center; width:620px; height:480px; display:inline-block; ')
+				div(style=' text-align:center; width:620px; height:480px; display:inline-block;')
 					div(style='text-align:left;')
 						div(style=' height:30px; font-size:20px; font-weight:bold;	display:inline-block;') 질문과 답글
 							div(style='display:inline') (0)
 					// Q&A 란
-					div(style='position:relative; height:340px; width:100%; background-color:white; text-align:justify; margin-top:20px;')
-						div(style='top:40%; font-weight:bold; font-size:17px; text-align:center; width:100%; position:absolute; background-color:rgba(0,0,0,0.5);')
-							| 현재 문의 내역이 없습니다.
-							br
-							|								 대화 창을 통해 여행자에게 문의해보세요!
+					ul#qna_list.list-group(style='position:relative; height:360px; width:620px; background-color:rgba(238, 238, 238, 1); text-align:justify; margin-top:20px; overflow:auto; overflow-x: hidden;')
+						//- add_other_qna(user_name, user_face, user_content, time)
+						+ add_other_qna('아저씨', '/p/b2.jpg', '배고파요', '2016-12-26 오전09:00')
+						+ add_host_qna('호스트', '/p/2.jpg', '어쩌라고요;;', '2016-12-26 오전09:12')
+						+ add_other_qna('아저씨', '/p/b2.jpg', '너무하네', '2016-12-26 오전09:34')
+						+ add_host_qna('아저씨', '/p/2.jpg', '죄송', '2016-12-26 오전09:36')
+						//- div(style='top:40%; font-weight:bold; font-size:17px; text-align:center; width:100%; position:absolute; background-color:rgba(0,0,0,0.5);')
+						//- 	| 현재 문의 내역이 없습니다.
+						//- 	br
+						//- 	|								 대화 창을 통해 여행자에게 문의해보세요!
 					div(style=' background-color:white; ')
-						div(style='margin-top:10px; height:50px; padding-top:5px; padding-bottom:5px; background-color:rgba(204, 204, 204, 1); width:100%; text-align:center;')
-							input#itemanme.form-control(type='itemname', placeholder='메세지를 입력하세요', style='display:inline-block;width:75%')
-							button.btn.btn-default(type='button', style='display:inline-block; width:20%') 전송
+						div(style='margin-top:0px; height:50px; padding-top:8px; padding-bottom:5px; background-color:rgba(204, 204, 204, 1); width:100%; text-align:left;')
+							button.btn.btn-default(type='button', style='display:inline-block; width:40px; margin-left:10px;') +
+							input#itemanme.form-control(type='itemname', placeholder='메세지를 입력하세요', style='display:inline-block; width:450px')
+							button.btn.btn-default(type='button', style='display:inline-block; width:105px') 전송
 			//- 거래현황
 			.col-md-4.col-xs-12(style='')
 				div(style=' text-align:justify; width:360px; display:inline-block; ')
@@ -166,13 +195,7 @@ block main
 							div(style='padding-left:20px; padding-right:20px; height:100px; padding-top:15px;  background-color:rgba(232, 249, 243, 1);') 
 								div(style='text-align:justify;') 요청가격
 								div(style='margin-top:10px; text-align:')
-									-if(who == 2 && dealing_status == 2)
-										input.form-control(type='number', placeholder='￦250,000', style='display:inline-block; width:75%', value= dealing_price)
-										button.btn.btn-default(type='button' style='width:20%') 수정
-									-else if(who == 2 && dealing_status > 2)
-										input.form-control(type='number', placeholder='￦250,000', style='display:inline-block; width:100% ', value= dealing_price readonly)
-									-else
-										input.form-control(type='number', placeholder='￦250,000', style='display:inline-block; width:100% ', value= dealing_price readonly)
+									input.form-control(type='number', placeholder='￦250,000', style='display:inline-block; width:100% ', value= dealing_price readonly)
 										
 							div(style='margin-left:20px; margin-right:20px; padding-top:16px; padding-bottom:5px;') 
 								-if(dealing_status == 1 && who == 1)
@@ -195,22 +218,37 @@ block main
 									div(style='height:60px; color:rgba(153, 153, 153, 1)') 거래가 완료 되었습니다.
 								
 								-if(dealing_status == 3 && who != 0)
-									div(style='margin-bottom:30px;')
-										-if( dealing_receipt_status == 0)
-											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ') 영수증 첨부
+									div(style='margin-bottom:30px; position:relative;')
+										-if( dealing_receipt_status == 0 && who == 2)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_receipt_modal()') 영수증 첨부
 												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
-										-else if( dealing_receipt_status == 1)
-											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ') 영수증 확인
-												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
-										
-										-if( dealing_shipping_method == 0)
-											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ') 배송 방법 선택
+										-else if( dealing_receipt_status == 0 && who == 1)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='') 영수증 아직 없음
 												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
-										-else if( dealing_shipping_method == 1)
-											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ') 직거래
+										-else if( dealing_receipt_status == 1 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='show_modal()') 영수증 확인
 												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
-										-else if( dealing_shipping_method == 2)
-											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ')= '배송 - 송관번호 ' + dealing_ship_number
+												button.btn.btn-primary(type='button' style='color:white; top:10px; right:10px; position:absolute; width:50px; height:30px; border-radius:30px; padding:3px; border:1px solid rgba(238, 238, 238, 1);' onclick='open_receipt_modal()') 수정
+										-else if( dealing_receipt_status == 1 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='show_modal()') 영수증 확인
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-if( dealing_shipping_method == 0 && who == 2)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()') 배송 방법 선택
+												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 0 && who == 1)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("여행자의 배송을 기다려주세요.")') 배송 방법 선택
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 1 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("여행자가 직거래를 선택하였습니다.")') 직거래
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 1 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()') 직거래
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 2 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("발송이 완료되었습니다.")')= '배송 - 송관번호 ' + dealing_ship_number
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 2 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()')= '배송 - 송관번호 ' + dealing_ship_number
 												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
 								div(style='text-align:center;')
 									-if(dealing_status == 1 && who == 1)
@@ -228,16 +266,123 @@ block main
 										button.btn.text_blod.btn-primary.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 수령 확인
 									-else if(dealing_status == 3 && who == 2 && dealing_receipt_status == 1 && dealing_shipping_method != 0)
 										button.btn.text_blod.btn-primary.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 배달 완료
-									
-										
-								
+
+	//- 영수증 등록										
+	#receipt_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='width:400px;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='text-align:center;')
+						form.text-center(action='/avatar_upload.php', method='post', enctype='multipart/form-data', style=' position:relative; margin-top:15px; display:inline-block; ')
+							div.kv-avatar.center-block(style='width:200px')
+								input#avatar-2.file-loading(name='avatar-2', type='file')
+							div(style='margin-top:30px;')
+								button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+								button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+									span.glyphicon.glyphicon-ok-circle
+									| &nbsp영수증 첨부
+
+	//- 영수증 보기										
+	#show_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='max-width:100%;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='text-align:center;')
+						img(src= dealing_receipt_img alt='영수증' style='width:100%;')
+					div(style='margin-top:30px;')
+						button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 닫기
+		
+	//- 배송방 등록										
+	#shipping_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='width:460px;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='padding:15px; margin-top:20px;')
+						form(style='text-align:left;' method='post')
+							input(type='radio' name='shipping_modal' value='0' checked style='width:20px; height:20px;')
+							div(style='display:inline-block; position:relative; top:-4px; font-size:18px;') 아직 결정안함
+							br()
+							input(type='radio' name='shipping_modal' value='1' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 직거래
+							br
+							input(type='radio' name='shipping_modal' value='2' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 배송
+							br
+							div#input_invoice_number(style='display:none;')
+								input.form-control(type='text' name='shipping_modal' value= dealing_ship_number placeholder='송장번호 입력해주세요.' style='margin-top:10px;')
+								div(style='display:inline-block; font-size:14px;') * 정확한 송장번호를 입력해 주셔야 합니다.
+							br
+							div(style='margin-top:15px; text-align:center;')
+								button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+								button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+									span.glyphicon.glyphicon-ok-circle
+									| &nbsp선택
 block scripts
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+		link(href='/library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
+		script(src='/library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
 		script(type='text/javascript', src='/myjs.js')
 		script(type='text/javascript').
+			var dealing_receipt_img_data = !{JSON.stringify(dealing_receipt_img)};
 			function a() {
-				var data = !{JSON.stringify(item_img)};
-				alert(data);
+				alert(dealing_receipt_img_data);
+			}
+			function open_receipt_modal(){
+				$('#receipt_modal').modal();
 			}
 			
+			function open_shipping_modal(){
+				$('#shipping_modal').modal();
+			}
+			function show_modal(){
+				$('#show_modal').modal();
+			}
+			
+			$('input[type=radio][name=shipping_modal]').change(function() {
+				if(this.value == '2'){
+					$('#input_invoice_number').show();
+				}
+				else {
+					$('#input_invoice_number').hide();
+				}
+			});
+			
+			$("#avatar-2").fileinput({
+			overwriteInitial: false,
+			maxFileSize: 1500,
+			showUpload: false,
+			showClose: false,
+			showCaption: false,
+			showBrowse: false,
+			browseOnZoneClick: true,
+			zoomIcon:'<i class="glyphicon glyphicon-remove"></i>',
+			removeLabel: '삭제',
+			removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+			removeTitle: 'Cancel or reset changes',
+			elErrorContainer: '#kv-avatar-errors-2',
+			msgErrorClass: 'alert alert-block alert-danger',
+			defaultPreviewContent: '<img src="'+ dealing_receipt_img_data + '" alt="Your Avatar" style="width:200px; height:160px"><h6 class="text-muted">Click to select</h6>',
+			layoutTemplates: {actions: '{delete}'},
+			allowedFileExtensions: ["jpg", "png", "gif"]
+			});
+			window.onload = function(){
+				
+			}
