@@ -18,6 +18,8 @@
   "homepage": "https://github.com/cwaw72/test#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "jade-php": "^0.1.4",
+    "node-php": "0.0.1"
   }
 }

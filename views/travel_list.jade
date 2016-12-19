@@ -12,11 +12,35 @@ block request_mode_list
 block travel_mode_list
 	+travel_mode_list
 	+travel_mode_list
+
+//-배열index, 아이디, 평점,  요청자 얼굴, 여행 시작 날짜, 끝나는 날짜, 요청자 수, 문의 수, 나라, 남은 날자
+mixin add_request(index, user_id, user_avg, user_face, start_travel, end_travel, start_date, end_date, req_nums, text_nums, nation, d_day)
+	li.item.col-sm-3.col-xs-6(style='width:262px; height:333px; background-color:white; position:relative; margin:10px; border:2px rgba(227, 227, 227, 1) solid' onclick='travel_click(#{index})')
+		img.request2_img(src= user_face,	alt='물건 이미지',	style='width:260px; height:172px;')
+		div(style='position:absolute; left:0px; bottom:0px; width:100%; height:162px; background-color:white;')
+			div(style='text-align:center;')
+				div.text_dark_gray(style='margin-top:20px;')= user_avg
+				div.text_blue(style='margin-top:5px; font-size:16px;')= user_id
+			div(style='text-align:center; font-size:21px; padding-top:8px;')
+				div(style='color:rgba(51, 51, 51, 1);')= start_travel
+					div(style='display:inline')= end_travel
+					div(style='font-size:11px; margin-top:5px; color:rgba(153, 153, 153, 1);')= start_date
+						div(style='display:inline') ~
+						div(style='display:inline')= end_date
+					
+			div(style=' color:rgba(102, 102, 102, 1); font-size:12px; padding-top:3px; padding-bottom:3px; padding-left:8px; padding-right:8px; position:absolute; bottom:0px; right:50px; border: solid 1px gray;  text-align:center') 한국
+			div(style=' color:rgba(102, 102, 102, 1); font-size:12px; padding-top:3px; padding-bottom:3px; padding-left:5px; padding-right:5px; position:absolute; bottom:0px; right:0px; border: solid 1px gray; width:50px; text-align:center')= 'D-'+ '144'
+			div(style='position:absolute; bottom:10px; left:20px; font-size:12px;')
+				img(src='p/person_gray.png' style='width:15px; height:15px') 
+				div(style='display:inline;')= req_nums
+				img(src='p/chat_gray.png' style='width:15px; height:15px; margin-left:20px;')
+				div(style='display:inline;')= text_nums
+				
 // 커다란 이미지
 block main
-	//- 검색바
-	.container-fulid(style='margin-top:50px; position:relative')
-		div(style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:100%; width:100% ')
+	// 배경 & 검색 창
+	.container-fulid(style='margin-top:60px; position:relative')
+		//- div(style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:100%; width:100% ')
 		// 검색창 1
 		div(style='font-size:0px; position:absolute; background-color:rgba(255,255,255,1); z-index:15; height:30%; width:80%; top:10%; left:10%;')
 			// 국가 선택
@@ -42,76 +66,30 @@ block main
 				ul.dropdown-menu(style='text-align:center; width:100%')
 					li
 						a(href='#', style='font-size:0.9rem; font-weight:bold;') 7일 이내
-					li 
-						a(href='#', style='font-size:0.9rem; font-weight:bold;')	10일 이내
 					li
-						a(href='#', style='font-size:0.9rem; font-weight:bold;')	30일 이내
+						a(href='#', style='font-size:0.9rem; font-weight:bold;') 10일 이내
+					li
+						a(href='#', style='font-size:0.9rem; font-weight:bold;') 30일 이내
 					li
 						input(type='date', name='enddate', min='2016-10-31', style='font-weight:bold; font-size:0.9rem;')
 			// 검색 form
 			input#itemanme.form-control.main_search.index_search_bar2(type='itemname', placeholder='상품명', style='')
 			// 검색하기 버튼
 			button.btn.btn-default.main_search.index_search_bar3(type='button', style='background-color:rgba(45, 159, 255, 1); color:white') 구매요청
-		div(style='position:absolute; background-color:rgba(255,255,255,1); z-index:15; height:30%; width:80%; top:50%; left:10%')
-		img(src='./p/b2.jpg', width='100%', alt='배경1', style='position:relative; z-index:1')
-
+		img(src='p/top_111.jpg', width='100%', alt='배경1', style='position:relative; z-index:1; height:100px;')
 	.container
-		// 상단 정렬 순 버튼
+		// 아이템 리스트 & 상단 정렬 순 버튼
 		.row(style='padding:30px')
-			button.btn.btn-default.pull-right(type='btn', style='width:80px') 인기 순
-			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px') 가격 순
-			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px') 마감일 순
-		// 아이템 들 첫줄 
-		.row(style='margin-bottom:10px; text-align:center;')
-			.col-xs-4
-				// 여행자 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					div(style='margin-left:10px; margin-top:5px;')
-						div(style='margin-left:10px; text-align:left;')	닉네임 평점 
-					div(style='text-align:center')
-						img(src='./p/s3.png', alt='아이템', height='180px', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	서울 
-						#item_name(style='font-weight:bold; display:inline-block;')	토쿄 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 11 
-						#item_name(style='font-weight:bold; display:inline-block;')	~ 
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 18 
-			.col-xs-4
-				// 여행자 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					div(style='margin-left:10px; margin-top:5px;')
-						div(style='margin-left:10px; text-align:left;')	닉네임 평점 
-					div(style='text-align:center')
-						img(src='./p/s3.png', alt='아이템', height='180px', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	서울 
-						#item_name(style='font-weight:bold; display:inline-block;')	토쿄 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 11 
-						#item_name(style='font-weight:bold; display:inline-block;')	~ 
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 18 
-			.col-xs-4
-				// 여행자 하나
-				div(style=' width:230px; height:320px; position:relative; display:inline-block; border: 1px solid black; background-color:rgba(255,255,255,1); margin-top:10px')
-					div(style='margin-left:10px; margin-top:5px;')
-						div(style='margin-left:10px; text-align:left;')	닉네임 평점 
-					div(style='text-align:center')
-						img(src='./p/s3.png', alt='아이템', height='180px', width='180px', style='margin-top:5px')
-					div(style='font-weight:bold; text-align:center; margin-top:15px')
-						div(style='color:rgba(45, 159, 255, 1); background-color:white; border-radius:5px; border:1px solid rgba(204, 204, 204, 1);	width:60px; display:inline-block ')	D-3 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	서울 
-						#item_name(style='font-weight:bold; display:inline-block;')	토쿄 
-					div(style='font-weight:bold; text-align:center; margin-top:5px')
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 11 
-						#item_name(style='font-weight:bold; display:inline-block;')	~ 
-						#item_name(style='font-weight:bold; display:inline-block;')	2016. 12. 18 
-	//- 이전 다음 pager
+			button.btn.btn-default.pull-right(type='btn', style='width:80px')	인기 순
+			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px')	가격 순
+			button.btn.btn-default.pull-right(type='btn', style='width:80px; margin-right:15px')	마감일 순
+			//-배열index, 아이디, 평점,  요청자 얼굴, 시작장소, 끝장소, 여행 시작 날짜, 끝나는 날짜, 요청자 수, 문의 수, 나라, 남은 날자
+		ul#travel_list.row.list-group(style='list-style-type:none; position:relative; text-align')
+			-for(i = 0 ; i < 12 ; i++)
+				+ add_request(i, '아이디', '3.4', 'p/1.jpg', '서울', '도쿄', '2016.11.11', '2016.12.25', '30','20', '남아프리카공화국', 4)
+		
+						
+	// 이전 다음 pager
 	ul.pager
 		li.previous
 			a(href='#') Previous
@@ -128,4 +106,12 @@ block main
 				a(href='#') 5
 		li.next
 			a(href='#') Next
-			
+
+block scripts
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+		script(type='text/javascript', src='/myjs.js')
+		script(type='text/javascript').
+			var money = 2312000;
+			console.log(money.toLocaleString());
+	

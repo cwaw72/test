@@ -12,210 +12,395 @@ block request_mode_list
 block travel_mode_list
 	+travel_mode_list
 	+travel_mode_list
-// 커다란 이미지
+
+	//- 아이템 이미지
+	-var item_img = '/p/1.jpg';
+	-var item_img2 = '/p/1.jpg'; 
+	-var item_img3 = '/p/2.png';
+
+	//- 등록한 유저이름
+	-var req_user_name = '아이디'
+	-var req_user_face = '/p/2.jpg'	
+	-var req_user_content = '캐나다구스 CANADAGOOSE 유럽판 익스페디션 레드 구매요청 합니다.2';
+	-var req_user_item_num = '2';
+	-var req_user_item_req_nation = '유럽';
+	-var req_user_item_where_receive = '서울 / 홍대';
+	-var req_user_item_enddate = '2016-12-25 (D-4)';
+	-var req_user_item_price = '￦250,000';
+	-var req_user_item_requirement = '캐나다 구스 레드 구하고 있습니다. 홍대나 신촌에서 직거래하고 싶습니다. 작년 캐나다 갔을때 10만원 주고 샀었는데 한국에서 20만운이나 하네요. 구스레드 2벌 싸게 25만에 구해주실분 부탁드립니다.';
+
+	//- 거래현황
+	//- 상태 0~4 0대기 1매칭중 2진행중(결제 대기) 3 결제완료 4 완료,
+	-var dealing_status = '1';
+	
+	//- 결제 완료 후 수령 상태 0둘다 안받음 1여행자가 줌 2요청자가 받음 
+	-var dealing_receive_status = '0';
+	
+	-var dealing_traveler_name ='지원자 아이디';
+
+	//- 거래중 가격 수정 0변경없음 1변경있음
+	-var dealing_price_status = '0';
+	-var dealing_price = '';
+	
+	//- 거래 영수증 상태 0아직 안 등록 1등록
+	-var dealing_receipt_status = '1';
+	-var dealing_receipt_img = '/p/2.jpg';
+	
+	//- 0 입력안함 1 직거래 2 배송
+	-var dealing_shipping_method = '2';
+	-var dealing_ship_number = '0000-000000-000000';
+	
+	//- 들어온 사람이 누군가 0아무나 1요청자 2지원 여행자
+	-var who = '2';
+	
+	
+	//- qna 질문 수
+	-var qna_nums = '4';
+
+	//- 유저 유니크 아이디, 유저 이름, 유저 얼굴, 유저 평균, 글 내용, 요구 가격 
+	mixin add_travel_request(user_id, user_name, user_face, user_avg, user_content, req_price)
+		li(style='border:1px solid rgba(227, 227, 227, 1); position:relative; height:150px; margin-top:20px; margin-left:5px; margin-right:5px;')
+			img(src= user_face, alt='face', style='margin-left:20px; margin-top:20px; width:60px; height:60px; border-radius:30px; position:relative; ')
+			div.text_blue(style='display:inline-block; position:relative; top:-10px; left:20px;')= user_id
+				div(style='display:inline-block')= user_avg
+				div(style='padding-top:5px; color:black; position:absolute; width:210px; height:50px;  overflow:hidden; text-overflow:ellipsis;')= user_content
+			div.text_blod.background_yellow(style='position:absolute; color: white; font-size:16px; right:0px; padding-left:10px; padding-top:3px; bottom:20px; height:30px; width:100px;')= '￦ ' + req_price
+				div(style='position:absolute; width:0; height:0; left:-15px; top:0px;  border-top: 15px solid rgba(255, 186, 0, 1); border-bottom: 15px solid rgba(255, 186, 0, 1); border-left: 15px solid transparent;')
+
+	mixin add_other_qna(user_name, user_face, user_content, time)
+		li(style=' position:relative; margin-top:10px;  margin-bottom:10px;')
+			img(src= user_face, alt='face', style='top:0px; left:0px; width:60px; height:60px; border-radius:30px; position:absolute;  margin-top:0px; margin-left:10px; margin-right:10px;')
+			div(style='position:relative; display:inline-block; width:445px; padding-left:10px; margin-left:80px; margin-right:80px; ')
+				div.text_blue(style='display:inline-block; position:absolute; top:0px; left:5px')= user_name
+				div(style='display:inline-block; background-color:white; position:relative; width:420px; margin-top:30px; left:0px; padding-bottom:40px; padding-left:20px; padding-right:20px; padding-top:10px; border-radius:5px; border-top-left-radius:0px;')= user_content
+					div(style='position:absolute; top:0px; left:-10px; width:0; height:0; border-top:10px solid white; border-bottom: 10px solid transparent; border-left: 10px solid transparent;')
+				div(style='display:inline-block; color:rgba(153, 153, 153, 1); position:absolute; bottom:10px; left:20px; padding-left:10px; padding-right:10px;')= time
+
+	mixin add_host_qna(user_name, user_face, user_content, time)
+		li(style=' position:relative; margin-top:10px; margin-bottom:10px;')
+			img(src= user_face, alt='face', style='top:0px; right:0px; width:60px; height:60px; border-radius:30px; position:absolute;  margin-top:0px; margin-left:10px; margin-right:10px;')
+			div(style='position:relative; display:inline-block; width:445px; padding-right:10px; margin-left:80px; margin-right:80px; ')
+				div.text_blue(style='display:inline-block; position:absolute; top:0px; right:5px')= user_name
+				div.background_blue(style='text-align:right; color:white; display:inline-block; position:relative; width:420px; margin-top:30px; left:10px; padding-bottom:40px; padding-left:20px; padding-right:20px; padding-top:10px; border-radius:5px; border-top-right-radius:0px;')= user_content
+					div(style='position:absolute; top:0px; right:-10px; width:0; height:0; border-top:10px solid rgba(0, 174, 239, 1); border-bottom: 10px solid transparent; border-right: 10px solid transparent;')
+				div(style='display:inline-block; color:rgba(204, 204, 204, 1); position:absolute; bottom:10px; right:20px; padding-left:10px; padding-right:10px;')= time
+
+
+
 block main
 	//- 검색바
-	.container-fulid(style='margin-top:50px; position:relative')
-		div(style='position:absolute; background-color:rgba(0, 0, 0, 0.65); z-index:10; height:100%; width:100% ')
-		img(src='./p/b2.jpg', width='100%', alt='배경1', style='position:relative; z-index:1')
-	.container
+	.container-fulid(style='margin-top:60px; position:relative')
+		img(src= 'p/top_111.jpg', width='100%', alt='배경1', style='position:relative; z-index:1; height:100px;')
+	.container(style=' margin-top:90px;')
 		// 첫 줄
-		.row(style='margin-bottom:10px; background-color:black; text-align:center; margin-top:50px;')
-			.col-xs-6
-				div(style=' text-align:center; background-color:white; width:350px; height:400px; display:inline-block;')
-					img(src='p/2.jpg', alt='face', style='margin-top:10px; width:100px; height:100px; position:relative; border-radius:60px;')
-					div(style='background-color:white; margin-top:10px ;')
-						div(style='font-weight:bold;	display:inline-block;')	닉네임
-						div(style='font-weight:bold;	display:inline-block;')	별별별별별 
-					div(style='background-color:white; margin-top:10px ;')
-						div(style='font-weight:bold;	display:inline-block;')	지원
-						div(style='font-weight:bold;	display:inline-block; color:blue;')	3 
-						div(style='font-weight:bold;	display:inline-block; ')	개 
-						div(style='font-weight:bold;	display:inline-block;')	완료
-						div(style='font-weight:bold;	display:inline-block; color:blue;')	2 
-						div(style='font-weight:bold;	display:inline-block; ')	개 
-						div(style='font-weight:bold;	display:inline-block;')	리뷰
-						div(style='font-weight:bold;	display:inline-block; color:blue;')	1 
-						div(style='font-weight:bold;	display:inline-block; ')	명 
-					div(style='background-color:white; margin-top:10px ;')
-						div(style='font-weight:bold;	display:inline-block;')	닉네임
-						div(style='font-weight:bold;	display:inline-block;')	별별별별별 
-					div(style='background-color:white; margin-top:10px ;')
-						div(style='font-weight:bold;	display:inline-block;')	이메일 인증
-						div(style='font-weight:bold;	display:inline-block;')	전화번호 인증 
-					textarea.form-control(placeholder='소개', id='', style='margin-left:5% width:60%')
-			.col-xs-6
-				div(style='width:350px; height:400px; display:inline-block;')
-					// 위 화면
-					div(style='background-color:white; height:340px;')
-						div(style='width:100%; height:30px; background-color:rgba(0, 174, 239, 1)')
-						// 좌우 사이즈
-						div(style='width:100%; padding-left:20px; padding-right:20px; text-align:justify')
-							div(style='background-color:white; margin-top:10px;')
-								div(style='font-weight:bold;	display:inline-block;')	항공편 
-								.pull-right(style='\
-								text-align:center;\
-								right:0px;\
-								color:rgba(45, 159, 255, 1);\
-								background-color:white;\
-								border-radius:5px;\
-								border:1px solid rgba(204, 204, 204, 1);\
-								width:60px;\
-								display:inline-block ')
-									| D-3
-							// border로 감싸기
-							div(style='margin-top:5px; border:black solid 2px;	border-radius:5px;')
-								#lets_go1(style='margin-top:20px;')
-									div(style='text-align:center; background-color:white; ')
-										div(style='font-weight:bold;	display:inline-block; border-bottom:solid black 1px; width:40%')	한국 
-										div(style='font-weight:bold;	display:inline-block; color:blue; width:10%')	-> 
-										div(style='font-weight:bold;	display:inline-block; border-bottom:solid black 1px; width:40%')	한국 
-									div(style='text-align:center; background-color:white; ')
-										div(style='font-weight:bold;	display:inline-block; width:40%')	2016.11.21 
-										div(style='font-weight:bold;	display:inline-block; color:blue; width:10%')
-										div(style='font-weight:bold;	display:inline-block; width:40%')	2016.11.21 
-								#lets_go2(style='margin-top:20px; margin-bottom:20px')
-									div(style='text-align:center; background-color:white; ')
-										div(style='font-weight:bold;	display:inline-block; border-bottom:solid black 1px; width:40%')	한국 
-										div(style='font-weight:bold;	display:inline-block; color:blue; width:10%')	-> 
-										div(style='font-weight:bold;	display:inline-block; border-bottom:solid black 1px; width:40%')	한국 
-									div(style='text-align:center; background-color:white; ')
-										div(style='font-weight:bold;	display:inline-block; width:40%')	2016.11.21 
-										div(style='font-weight:bold;	display:inline-block; color:blue; width:10%')
-										div(style='font-weight:bold;	display:inline-block; width:40%')	2016.11.21 
-							div(style='background-color:white; margin-top:10px ;')
-								div(style='font-weight:bold;	display:inline-block;')	가격 한도
-							div(style='background-color:white; margin-top:10px; position:relative; height:50px')
-								div(style='position:absolute;') 0원
-								div(style='position:absolute; right:0px') 100원
-								.text-center.progress(style='height:10px')
-									.progress-bar(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style='width:70%')
-								// 북마크
-								div(style='color:black; position:absolute; left:70%') 70원
-								// 현재가격
-								div(style='color:black; position:absolute; left:70%; top:40px') 70원
-					// 아래 화면
-					div(style='margin-top:20px;background-color:white; height:40px; text-align:center')
-						button.btn.btn-primary(type='button', style='margin-top:5px; width:140px; height:30px')	문의하기 
-						button.btn.btn-primary(type='button', style='margin-top:5px; width:140px; height:30px')	요청하기 
+		.row(style='margin-bottom:10px; text-align:center;  border-bottom:1px solid black;')
+			//- 아이템 이미지
+			.col-md-6.col-xs-12(style='padding-bottom:80px;')
+				div(style=' text-align:center; width:440px; height:480px; display:inline-block; ')
+					img(src= item_img, alt='item', style='width:255px; height:255px; position:relative; border-radius:130px;' onclick='a()')
+					div(style='margin-top:15px;')
+						div(style='text-align:center;')
+							div.text_dark_gray(style='margin-top:10px;') 3.4
+							div.text_blue.text_blod(style='margin-top:0px; font-size:18px;') 걸리버의 여행
+						div(style='margin-top:10px; text-align:center;')
+							div(style='display:inline-block') 지원
+								div(style='display:inline').text_blue 3개
+							div(style='display:inline-block') 완료
+								div(style='display:inline').text_blue 3개
+							div(style='display:inline-block') 리뷰
+								div(style='display:inline').text_blue 3개
+				
+			.col-md-6.col-xs-12
+				div(style='width:460px; height:480px; display:inline-block;')
+					img(src= req_user_face, alt='item', style='width:100px; height:100px; border-radius:50px; position:relative;')
+					div.text_blue.text_blod(style='font-size:18px; margin-top:10px;')= req_user_name
+						div(style='color:black; display:inline;') 님의 요청
+					div(style='position:relative; margin-top:10px; text-align:left;')
+						img(src='p/2.jpg', alt='item', style='width:72px; height:72px; top:0px; right:0px; position:absolute;')
+						div(style='padding-top:20px; font-size:23px; width:380px;')= req_user_content
+						div.request_info_text_area.text_blod(style='margin-top:15px;') 요청수량
+							div(style='display:inline; padding-left:50px')= req_user_item_num
+						div.request_info_text_area.text_blod(style='') 요청국가
+							div(style='display:inline; padding-left:50px')= req_user_item_req_nation
+						div.request_info_text_area.text_blod(style='') 만료날짜
+							div(style='display:inline; padding-left:50px')= req_user_item_enddate
+						div.request_info_text_area.text_blod(style='') 수령장소
+							div(style='display:inline; padding-left:50px')= req_user_item_where_receive
+						div.request_info_text_area.text_blod(style='') 요청가격
+							div.text_blue.text_blod(style='display:inline; padding-left:50px')= req_user_item_price
+						div.request_info_text_area.text_blod(style=' position:relative; display:inline-block; ') 요청사항
+							div.text_size_nomal(style='display:inline-block; position:relative; padding-left:105px; top:-18px;')= req_user_item_requirement
+						div(style='text-align:center;')
+							-if (who == 0)
+								button.btn.btn-default(type='button' style='height:52px; width:160px; border-radius:50px;') 나도 구매요청
+							-if (dealing_status == '0' && who =='0' )
+								button.btn.btn-primary.background_blue(type='button' style='height:52px; width:220px; border-radius:50px; padding-left:10px') 지원하기
+		
+		
 		// Q&A, 리뷰
-		.row(style='margin-bottom:10px; background-color:black; text-align:center; margin-top:50px;')
-			.col-xs-6
-				div(style=' text-align:justify; width:350px; display:inline-block;')
-					div(style='')
-						div(style=' height:30px; font-size:20px; font-weight:bold;	display:inline-block;')	Q&A (0) 
+		.row(style='padding-bottom:90px; text-align:center; margin-top:50px;')
+			.col-md-8.col-xs-12
+				div(style=' text-align:center; width:620px; height:480px; display:inline-block;')
+					div(style='text-align:left;')
+						div(style=' height:30px; font-size:20px; font-weight:bold;	display:inline-block;') 질문과 답글
+							div(style='display:inline') (0)
 					// Q&A 란
-					div(style='position:relative; height:250px; width:100%; background-color:white; text-align:justify')
-						div(style='top:40%; font-weight:bold; font-size:17px; text-align:center; width:100%; position:absolute; background-color:rgba(0,0,0,0.5);')
-							| 현재 문의 내역이 없습니다.
-							br
-							|								 대화 창을 통해 여행자에게 문의해보세요!
+					ul#qna_list.list-group(style='position:relative; height:360px; width:620px; background-color:rgba(238, 238, 238, 1); text-align:justify; margin-top:20px; overflow:auto; overflow-x: hidden;')
+						//- add_other_qna(user_name, user_face, user_content, time)
+						+ add_other_qna('아저씨', '/p/b2.jpg', '배고파요', '2016-12-26 오전09:00')
+						+ add_host_qna('호스트', '/p/2.jpg', '어쩌라고요;;', '2016-12-26 오전09:12')
+						+ add_other_qna('아저씨', '/p/b2.jpg', '너무하네', '2016-12-26 오전09:34')
+						+ add_host_qna('아저씨', '/p/2.jpg', '죄송', '2016-12-26 오전09:36')
+						//- div(style='top:40%; font-weight:bold; font-size:17px; text-align:center; width:100%; position:absolute; background-color:rgba(0,0,0,0.5);')
+						//- 	| 현재 문의 내역이 없습니다.
+						//- 	br
+						//- 	|								 대화 창을 통해 여행자에게 문의해보세요!
 					div(style=' background-color:white; ')
-						div(style='margin-top:10px; height:50px; padding-top:5px; padding-bottom:5px; background-color:rgba(204, 204, 204, 1); width:100%; text-align:center;')
-							input#itemanme.form-control(type='itemname', placeholder='메세지를 입력하세요', style='display:inline-block;width:75%')
-							button.btn.btn-default(type='button', style='display:inline-block; width:20%')	전송 
-			// 리뷰
-			.col-xs-6
-				div(style=' text-align:justify; width:350px; height:400px; display:inline-block; ')
-					div(style='')
-						div(style=' height:30px; font-size:20px; font-weight:bold;	display:inline-block;')	리뷰 (1) 
-					// 리뷰 추가
-					ul#review_list.list-group(style='overflow:auto; height:310px;')
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
-						li#review_list_index.list-group-item(onclick='()', style='margin-top:5px;')
-							div(style='position:relative; font-size:12px; ')
-								img(src='p/2.jpg', alt='face', style=' width:45px; height:45px; display:inline-block; position:relative; border-radius:60px; left:0px; top:-10px')
-								div(style='position:relative; display:inline-block; text-align:left;		 left:5px;\
-								top:5px')
-									| nickname
-									div(id='', style='\
-									width:160px;\
-									white-space:nowrap;\
-									overflow:hidden;\
-									text-overflow:ellipsis;')	very kind
-									div	오전 12:36 
-								img(src='p/2.jpg', alt='face', style='width:45px; height:45px; display:inline-block; position:absolute; right:0px; top:10px')
-								div(style='font-size:13px; font-weight:bold; width:20px; height:20px; background-color:rgba(0, 159, 255, 1); border-radius:20px; position: absolute; right:-3px; top:3px; color:white; text-align:center')	3 
+						div(style='margin-top:0px; height:50px; padding-top:8px; padding-bottom:5px; background-color:rgba(204, 204, 204, 1); width:100%; text-align:left;')
+							button.btn.btn-default(type='button', style='display:inline-block; width:40px; margin-left:10px;') +
+							input#itemanme.form-control(type='itemname', placeholder='메세지를 입력하세요', style='display:inline-block; width:450px')
+							button.btn.btn-default(type='button', style='display:inline-block; width:105px') 전송
+			//- 거래현황
+			.col-md-4.col-xs-12(style='')
+				div(style=' text-align:justify; width:360px; display:inline-block; ')
+					- if( dealing_status == 0)
+						div(style=' margin-left:20px; margin-right:20px; height:30px; font-size:20px; font-weight:bold;	display:inline-block;') 지원 현황
+						div(style=' padding-top:10px; padding-bottom:10px;')
+							ul#review_list.list-group(style='overflow:auto; height:480px;')
+								//- 유저 유니크 아이디, 유저 이름, 유저 얼굴, 유저 평균, 글 내용, 요구 가격 
+								+ add_travel_request('user_id', '이름', 'p/2.jpg', 3.4, '30자 오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십', 200000  )
+								+ add_travel_request('user_id', '이름', 'p/2.jpg', 3.4, '30자 오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십', 200000  )
+								+ add_travel_request('user_id', '이름', 'p/2.jpg', 3.4, '30자 오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십', 200000  )
+
+					- else if( dealing_status != 0)
+						div(style='margin-left:20px; margin-right:20px; height:30px; font-size:20px; font-weight:bold;	display:inline-block;') 거래현황 
+						div(style=' padding-top:10px; padding-bottom:10px; border:solid rgba(0, 174, 239, 1) 1px; margin-top:20px;')
+							div(style='margin-left:20px; margin-right:20px; position:relative; margin-top:50px;  text-align:center; height:120px;')
+								div(style='position:absolute; display:inline-block; text-align:center; left:0px;')
+									img(src='p/2.jpg', alt='face', style='width:60px; height:60px; border-radius:30px; position:relative; margin-left:10px; margin-right:10px;')
+									div.text_blue(style='width:90px;')= req_user_name
+									div(style='position:absolute; top:-32px; left:0px; text-align:center')
+										div.text_blod(style='display:inline-block; background-color:rgba(45, 159, 255, 1); padding-top:5px; padding-bottom:5px;  width:90px; border-radius:5px;') 구매 요청자
+										div(style='position:relative; display:inline; top:5px;').arrow-down
+								div(style='position:relative; display:inline-block;top:-20px;')
+									-if (dealing_status == '1') 
+										div.text_blod(style='font-size:16px; color:white; width:100px; height:100px; border-radius:50px; position:relative; margin-left:20px; margin-right:20px; display:inline-block; background-color:rgba(255, 162, 0, 1); padding-top:25px;') 매칭중
+											span.glyphicon.glyphicon-refresh(style='font-size:23px; padding-top:5px; display:block')
+									-else if (dealing_status == '2') 
+										div.text_blod(style='font-size:16px; color:white; width:100px; height:100px; border-radius:50px; position:relative; margin-left:20px; margin-right:20px; display:inline-block; background-color:rgba(234, 96, 96, 1); padding-top:25px;') 결제 대기
+											span.glyphicon.glyphicon-credit-card(style='font-size:23px; padding-top:5px; display:block')
+									-else if (dealing_status == '3') 
+										div.text_blod(style='font-size:16px; color:white; width:100px; height:100px; border-radius:50px; position:relative; margin-left:20px; margin-right:20px; display:inline-block; background-color:rgba(234, 96, 96, 1); padding-top:25px;') 결제 완료
+											span.glyphicon.glyphicon-gift(style='font-size:23px; padding-top:5px; display:block')
+									-else if (dealing_status == '4') 
+										div.text_blod(style='font-size:16px; color:white; width:100px; height:100px; border-radius:50px; position:relative; margin-left:20px; margin-right:20px; display:inline-block; background-color:rgba(130, 137, 146, 1); padding-top:25px;') 완료
+											span.glyphicon.glyphicon-check(style='font-size:23px; padding-top:5px; display:block')
+								div(style='position:absolute; display:inline-block; text-align:center; right:0px;')
+									img(src='p/2.jpg', alt='item', style='width:60px; height:60px; border-radius:30px; position:relative; margin-left:10px; margin-right:10px;')
+									div.text_blue(style='width:90px;')= dealing_traveler_name
+									div(style='position:absolute; top:-32px; left:0px; text-align:center')
+										div.text_blod(style='display:inline-block; background-color:rgba(255, 242, 0, 1); padding-top:5px; padding-bottom:5px; width:90px; border-radius:5px;') 지원 여행자
+										div(style='position:relative; display:inline; top:5px; border-top: 10px solid rgba(255, 242, 0, 1);').arrow-down
+							div(style='padding-left:20px; padding-right:20px; height:100px; padding-top:15px;  background-color:rgba(232, 249, 243, 1);') 
+								div(style='text-align:justify;') 요청가격
+								div(style='margin-top:10px; text-align:')
+									input.form-control(type='number', placeholder='￦250,000', style='display:inline-block; width:100% ', value= dealing_price readonly)
+										
+							div(style='margin-left:20px; margin-right:20px; padding-top:16px; padding-bottom:5px;') 
+								-if(dealing_status == 1 && who == 1)
+									div.text_blod(style='height:60px; color:rgba(255, 162, 0, 1);') - 여행자의 요청 수락을 기다리세요.
+								-else if(dealing_status == 1 && who == 2)
+									div.text_blod(style='height:60px; color:rgba(255, 162, 0, 1);') - 확인 후 수락해 주세요.
+								-else if(dealing_status == 2)
+									div.text_caution.text_blod(style='height:60px;') - 결제 대기중입니다.
+								-else if(dealing_status == 3 && who == 2)
+									div.text_caution.text_blod(style='height:100px;') - 결제가 완료되었습니다.
+										div.text_size_nomal(style='font-weight:normal; color:red; padding-top:10px;') * 구매 후 영수증을 꼭 등록해 주세요.
+										div.text_size_nomal(style='font-weight:normal; color:red; padding-top:5px;') * 영수증과 배송방법을 등록하셔야 거래를 완료하실 수 있습니다.
+								-else if(dealing_status == 3 && who == 1)
+									div.text_caution.text_blod(style='height:100px;') - 결제가 완료되었습니다.
+										div.text_size_nomal(style='font-weight:normal; color:red; padding-top:10px;') * 구매 영수증을 꼭 확인해 주세요.
+										div.text_size_nomal(style='font-weight:normal; color:red; padding-top:5px;') * 여행자가 물품 발송 후 수령 버튼을 누르실 수 있습니다.
+								-else if(dealing_status == 3 && who == 0)
+									div.text_caution.text_blod(style='height:60px;') - 결제가 완료되었습니다.
+								-else if(dealing_status == 4)
+									div(style='height:60px; color:rgba(153, 153, 153, 1)') 거래가 완료 되었습니다.
+								
+								-if(dealing_status == 3 && who != 0)
+									div(style='margin-bottom:30px; position:relative;')
+										-if( dealing_receipt_status == 0 && who == 2)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_receipt_modal()') 영수증 첨부
+												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
+										-else if( dealing_receipt_status == 0 && who == 1)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='') 영수증 아직 없음
+												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
+										-else if( dealing_receipt_status == 1 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='show_modal()') 영수증 확인
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+												button.btn.btn-primary(type='button' style='color:white; top:10px; right:10px; position:absolute; width:50px; height:30px; border-radius:30px; padding:3px; border:1px solid rgba(238, 238, 238, 1);' onclick='open_receipt_modal()') 수정
+										-else if( dealing_receipt_status == 1 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='show_modal()') 영수증 확인
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-if( dealing_shipping_method == 0 && who == 2)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()') 배송 방법 선택
+												span.glyphicon.glyphicon-remove-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 0 && who == 1)
+											button.text_blod.btn.btn-danger(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("여행자의 배송을 기다려주세요.")') 배송 방법 선택
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 1 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("여행자가 직거래를 선택하였습니다.")') 직거래
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 1 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()') 직거래
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 2 && who == 1)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='alert("발송이 완료되었습니다.")')= '배송 - 송관번호 ' + dealing_ship_number
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+										-else if( dealing_shipping_method == 2 && who == 2)
+											button.text_blod.btn.btn-primary(type='button' style=' width:100%; height:50px; border-radius:0px; ' onclick='open_shipping_modal()')= '배송 - 송관번호 ' + dealing_ship_number
+												span.glyphicon.glyphicon-ok-circle(style='float:left; font-size:20px;')
+								div(style='text-align:center;')
+									-if(dealing_status == 1 && who == 1)
+										button.btn.btn-default(type='button' style=' width:110px; height:50px; border-radius:25px;') 요청취소
+										button.btn.btn-primary.text_blod.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 여행자 정보보기
+									-else if(dealing_status == 1 && who == 2)
+										button.btn.btn-default(type='button' style=' width:110px; height:50px; border-radius:25px;') 요청취소
+										button.btn.btn-primary.text_blod.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 요청 수락
+									-else if(dealing_status == 2 && who == 1)
+										button.btn.btn-default(type='button' style=' width:110px; height:50px; border-radius:25px;') 요청취소
+										button.btn.text_blod.btn-danger.background_red(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 결제 하기
+									-else if(dealing_status == 2 && who == 2)
+										button.btn.btn-default(type='button' style=' width:110px; height:50px; border-radius:25px;') 요청취소
+									-else if(dealing_status == 3 && who == 1 && dealing_receipt_status == 1 && dealing_shipping_method != 0)
+										button.btn.text_blod.btn-primary.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 수령 확인
+									-else if(dealing_status == 3 && who == 2 && dealing_receipt_status == 1 && dealing_shipping_method != 0)
+										button.btn.text_blod.btn-primary.background_blue(type='button' style=' width:180px; height:50px; border-radius:25px; margin-left:5px;') 배달 완료
+
+	//- 영수증 등록										
+	#receipt_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='width:400px;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='text-align:center;')
+						form.text-center(action='/avatar_upload.php', method='post', enctype='multipart/form-data', style=' position:relative; margin-top:15px; display:inline-block; ')
+							div.kv-avatar.center-block(style='width:200px')
+								input#avatar-2.file-loading(name='avatar-2', type='file')
+							div(style='margin-top:30px;')
+								button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+								button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+									span.glyphicon.glyphicon-ok-circle
+									| &nbsp영수증 첨부
+
+	//- 영수증 보기										
+	#show_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='max-width:100%;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='text-align:center;')
+						img(src= dealing_receipt_img alt='영수증' style='width:100%;')
+					div(style='margin-top:30px;')
+						button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 닫기
+		
+	//- 배송방 등록										
+	#shipping_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='')
+		.modal-dialog.modal-center(style='width:460px;')
+			.modal-content
+				.modal-body(style='text-align:center; ')
+					.row
+						button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+							span(aria-hidden='true') ×
+							span.sr-only Close
+					div(style='padding:15px; margin-top:20px;')
+						form(style='text-align:left;' method='post')
+							input(type='radio' name='shipping_modal' value='0' checked style='width:20px; height:20px;')
+							div(style='display:inline-block; position:relative; top:-4px; font-size:18px;') 아직 결정안함
+							br()
+							input(type='radio' name='shipping_modal' value='1' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 직거래
+							br
+							input(type='radio' name='shipping_modal' value='2' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 배송
+							br
+							div#input_invoice_number(style='display:none;')
+								input.form-control(type='text' name='shipping_modal' value= dealing_ship_number placeholder='송장번호 입력해주세요.' style='margin-top:10px;')
+								div(style='display:inline-block; font-size:14px;') * 정확한 송장번호를 입력해 주셔야 합니다.
+							br
+							div(style='margin-top:15px; text-align:center;')
+								button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+								button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+									span.glyphicon.glyphicon-ok-circle
+									| &nbsp선택
+block scripts
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+		link(href='/library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
+		script(src='/library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
+		script(src='/library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
+		script(type='text/javascript', src='/myjs.js')
+		script(type='text/javascript').
+			var dealing_receipt_img_data = !{JSON.stringify(dealing_receipt_img)};
+			function a() {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '');
+				xhr.onreadystatechange = function(){
+						if(xhr.readyState === 4 && xhr.status === 200){
+								document.querySelector('#time').innerHTML = xhr.responseText;
+						}
+				}
+				xhr.send(); 
+				alert(dealing_receipt_img_data);
+				
+			}
+			function open_receipt_modal(){
+				$('#receipt_modal').modal();
+			}
+			
+			function open_shipping_modal(){
+				$('#shipping_modal').modal();
+			}
+			function show_modal(){
+				$('#show_modal').modal();
+			}
+			
+			$('input[type=radio][name=shipping_modal]').change(function() {
+				if(this.value == '2'){
+					$('#input_invoice_number').show();
+				}
+				else {
+					$('#input_invoice_number').hide();
+				}
+			});
+			
+			$("#avatar-2").fileinput({
+			overwriteInitial: false,
+			maxFileSize: 1500,
+			showUpload: false,
+			showClose: false,
+			showCaption: false,
+			showBrowse: false,
+			browseOnZoneClick: true,
+			zoomIcon:'<i class="glyphicon glyphicon-remove"></i>',
+			removeLabel: '삭제',
+			removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+			removeTitle: 'Cancel or reset changes',
+			elErrorContainer: '#kv-avatar-errors-2',
+			msgErrorClass: 'alert alert-block alert-danger',
+			defaultPreviewContent: '<img src="'+ dealing_receipt_img_data + '" alt="Your Avatar" style="width:200px; height:160px"><h6 class="text-muted">Click to select</h6>',
+			layoutTemplates: {actions: '{delete}'},
+			allowedFileExtensions: ["jpg", "png", "gif"]
+			});
+			window.onload = function(){
+				
+			}

@@ -313,7 +313,7 @@ block main
 						form(style='text-align:left;' method='post')
 							input(type='radio' name='shipping_modal' value='0' checked style='width:20px; height:20px;')
 							div(style='display:inline-block; position:relative; top:-4px; font-size:18px;') 아직 결정안함
-							br()
+						 		br()
 							input(type='radio' name='shipping_modal' value='1' style='width:20px; height:20px;' )
 							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 직거래
 							br
@@ -343,7 +343,16 @@ block scripts
 		script(type='text/javascript').
 			var dealing_receipt_img_data = !{JSON.stringify(dealing_receipt_img)};
 			function a() {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '');
+				xhr.onreadystatechange = function(){
+						if(xhr.readyState === 4 && xhr.status === 200){
+								document.querySelector('#time').innerHTML = xhr.responseText;
+						}
+				}
+				xhr.send(); 
 				alert(dealing_receipt_img_data);
+				
 			}
 			function open_receipt_modal(){
 				$('#receipt_modal').modal();

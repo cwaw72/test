@@ -1,88 +1,307 @@
-extends ./layout
+extends layout
+
+block styles
+	link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css')
+	link(rel='stylesheet', type='text/css', href='/css/mystyle.css')
+	link(rel="stylesheet",href="/css/login_form.css")
+	link(rel="stylesheet",href="/css/menu_side.css")
+	link(rel='stylesheet', href='/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')
 
 block data
 	-var test = "여행의 직구"
 
 block chat_list
-	+chat_list
 block chat_content_list
 block request_mode_list
-	+request_mode_list
-	+request_mode_list
 block travel_mode_list
-	+travel_mode_list
-	+travel_mode_list
-// 커다란 이미지
+
+//-배열index, 아이디, 평점, 출발지, 도착지, 출발날짜, 도착날짜, 얼굴사진, 나라, d_day 
+mixin add_travel(index, id, avg, start, arrive, when_s, when_a, face, nation, d_day )
+	li.item.col-sm-3.col-xs-6(style='width:200px; height:220px; background-color:white; position:relative; margin:10px; border:1px gray solid' onclick='travel_click(#{index})')
+		img.request2_img(src= face,	alt='사람얼굴',	style='width:100%')
+		div(style='position:absolute; left:0px; bottom:0px; width:100%; height:100px; background-color:white;  padding:10px;')
+			div.text_blue()= id
+				div(style='display:inline')= avg
+			div.text_blod()= start
+				div(style='display:inline')= arrive
+			div.text_gray()= when_s
+				div(style='display:inline')= when_a
+		img.item_check(src='/p/check_gray.png' style='position:absolute; top:10px; right:10px; width:35px' onclick='check_click(#{index})')
+		div(style='position:absolute; bottom:0px; right:40px; border: solid 1px gray; width:40px; text-align:center')= nation
+		div(style='position:absolute; bottom:0px; right:0px; border: solid 1px gray; width:40px; text-align:center')= 'D-'+d_day
+		
+//- 커다란 이미지
 block main
-	//- main context
+	// main context
+	.container-fulid
+		img(src='/p/b1.jpg' style='width:100%; margin-top:50px;')
 	.reg_main
-		.container.reg_main_inner(style='background-color:white; ')
-			br
-			p(style='text-align:center; font-size:2rem; font-weight:bold; color:rgba(0, 174, 239, 1);')  여행자 등록 
-			p(style='text-align:center; font-size:1rem')  여정을 등록하고 경비를 벌어 보세요! 
-			p.header_jun 기본 정보 입력
-			.hidden-xs(style=' margin-bottom:15px', ;='')
-			.row
-				// 이미지 등록 & 기본 정보 입력 란
-				#reg_picture.col-xs-12.col-sm-4(style='text-align:center')
-					// the avatar markup
-					form.text-center(action='/avatar_upload.php', method='post', enctype='multipart/form-data', style='position:relative; margin-top:15px')
-						#kv-avatar-errors-2.center-block.text-center(style='width:200px;display:none;')
-						.kv-avatar.center-block(style='width:210px')
-							input#avatar-2.file-loading(name='avatar-2', type='file')
-						// include other inputs if needed and include a form submit (save) button
-					// your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission
-				#reg_info.col-xs-12.col-sm-8(style='')
-					p.reg_input  이름 
-					input#email.form-control.reg_input(type='name', placeholder='이름')
-					br
-					p.reg_input  연락처 
-					input#email.form-control.reg_input(type='phone', placeholder='휴대폰')
-					br
-					p.reg_input  소속 (선택사항)
-					input.form-control.reg_input(type='text', placeholder='소속', id='')
-					br
-					p.reg_input  소개 
-					textarea.form-control.reg_input(placeholder='소개', id='')
-					br
-			.row
-				p.header_jun  본인 인증 
-				// 본인 인증란
-				#reg_who
-					h1(style='padding:50px')  추가 예정입니다. 
-			// 버튼
-			.col-xs-12(style='margin-bottom:50px; text-align:center')
-				button.btn.btn_jun(type='button', style='margin-top:50px;', onclick="location.href='travel_reg2'")  다음 
+		.container
+			form#abc(action='', method='post', enctype='multipart/form-data', style='')
+				div(style='text-align:left; font-size:1rem; font-weight:bold; color:rgba(0, 0, 0, 0.7); border-bottom: 2px solid black;  padding-bottom:15px; padding-top:15px;')
+					img(src='/p/shopping_dark_gray2.png' alt='request' style='width:35px')
+					|  여행자 등록
+					div(style='display:inline; font-size:14px; color:rgba(0, 0, 0, 0.5)') 여행을 등록하고 경비를 벌어보세요!
+				// 현재 상황 이미지
+				.hidden-xs(style='margin-top:40px')
+				div(style='margin-left:10%; margin-right:10%; background-color:white;')
+					div.header_jun(style='border-bottom:1px solid gray; padding:20px') 01
+						div(style='color:rgba(0, 0, 0, 0.75); display:inline') 정보 입력 
+					div.row(style='padding:20px')
+						//- 이미지 등록 & 기본 정보 입력 란
+						#reg_picture.col-xs-12.col-sm-5(style='text-align:center')
+							input#input-image-2(name="inputdim1[]" type="file" multiple accept="image/*")
+							// the avatar markup
+								//- #kv-avatar-errors-2.center-block.text-center(style='width:200px;display:none;')
+								//- .kv-avatar.center-block(style='width:210px')
+								//- 	input#avatar-2.file-loading(name='avatar-2', type='file')
+								// include other inputs if needed and include a form submit (save) button
+							// your server code `avatar_upload.php` will receive `$_FILES['avatar']` on form submission
+						#reg_info.col-xs-12.col-sm-7(style='')
+							p.reg_input 이름 
+							input#user_name.form-control.reg_input.placeholder_text_size(type='name', placeholder='이름')
+							br
+							p.reg_input 연락처
+							input#user_phone.form-control.reg_input.placeholder_text_size(type='number', placeholder='연락처' style='')
+							br
+							p.reg_input 입금 계좌 번호 
+							div
+								button.btn.btn-default(type='button' style='')
+									img(src='/p/link_dark_gray.png' style='width:15px')
+									| 은행선택
+								input.form-control.reg_input.placeholder_text_size(type='name', placeholder='계좌번호를 입력해주세요.', id='' style='position:relative; display:inline-block; width:60%;')
+							br
+
+							p.reg_input(style='') 소개글 
+							textarea.form-control.reg_input.placeholder_text_size(placeholder='구매 요청자가 참고할 만한 여행지, 귀국일 등 소개글을 적어주세요.', id='', style='height:150px;')
+					
+					//- 여행자 선택
+					div.header_jun#reg_req_effeft(style='border-bottom:2px solid gray; padding:20px') 02
+						div(style='color:rgba(0, 0, 0, 0.75); display:inline') 여행정보 등록
+
+					div(style='padding:30px; border-bottom:1px solid gray;')
+						p.reg_input 상품 요청할 지역 선택하기 
+						div()
+							button.btn.btn-default(type='button' onclick='select_nation()') 출발지 선택
+							button.btn.btn-default(type='button' onclick='select_nation()') 도착 도시
+						br
+						input.form-control.reg_input.placeholder_text_size(type='date', min='2016-10-31', placeholder='출국일', id='' style='width:50%')
+						input.form-control.reg_input.placeholder_text_size(type='date', min='2016-10-31', placeholder='귀국일', id='' style='width:50%')
+						br
+						p.reg_input 가격 제시 
+						form(style='text-align:left;' method='post')
+							input(type='radio' name='travel_purpose' value='0' checked style='width:20px; height:20px;')
+							div(style='display:inline-block; position:relative; top:-4px; font-size:18px;') 여행
+							input(type='radio' name='travel_purpose' value='1' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 출장
+							input(type='radio' name='travel_purpose' value='2' style='width:20px; height:20px;' )
+							div(style='display:inline-block; position:relative; top:-4px;  font-size:18px;') 기타
+							input#user_phone.form-control.reg_input.placeholder_text_size(type='number', placeholder='직접입력' style='position:relative; display:inline; width:60%;')
+							br
+			
+					.hidden-xs(style='margin-top:40px')
+					div.header_jun#reg_req_effeft(style='border-bottom:2px solid gray; padding:20px') 03
+						div(style='color:rgba(0, 0, 0, 0.75); display:inline') 가격한도
+
+					div(style='padding:30px; border-bottom:1px solid gray;')
+						p.reg_input 최고 가격의 한도를 설정해 주세요.
+						input.form-control.reg_input.placeholder_text_size(type='text', placeholder='가격을 제시해 주세요.', id='' style='width:50%')
+						br
+					div(style='margin-bottom:50px; text-align:center')
+						button.btn.btn-default.background_blue.text_white.text_blod(type='button', style='margin-top:50px; width:260px; height:50px; border-radius:25px; font-size:13px;', onclick="location.href='request_reg2'")
+							span.glyphicon.glyphicon-ok
+							|	여행 등록하기
+			
+				#user_info.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+					.modal-dialog.modal-center.modal_size
+						.modal-content
+							.modal-body(style='text-align:center; ')
+								.row
+									button.close(type='button', data-dismiss='modal')
+										span(aria-hidden='true') ×
+										span.sr-only Close
+								img#modal_face(src='', alt='face', width='120px', height='120px', style='border-radius:60px;')
+								div()
+									#modal_star() 평점
+								// 이름
+								div(style='font-weight:bold; display:block;')
+									#modal_name.text_blue(style='display:inline; font-size:16px;') 윰쓰
+								// 사는곳 & 가입날짜
+								//- div(style='font-weight:bold; display:block; padding:5px')
+								//- 	#user_living_nation(style='display:inline') 서울
+								//- 	| /
+								//- 	#user_living_city(style='display:inline') 한국
+								// 거래 수
+								div(style='font-weight:bold; display:block; text-align:center; padding:5px')
+									div(style='display:inline-block')  요청 
+									#modal_req_nums(style='display:inline-block')  9개 
+									div(style='display:inline-block; margin-left:10px')  완료 
+									#modal_suc_nums(style='display:inline-block')  15개 
+									div(style='display:inline-block;  margin-left:10px')  리뷰 
+									#modal_review_nums(style='display:inline-block')  9명 
+								// 소개
+								div(style='font-weight:bold; display:block; padding:5px; margin-left:30px; margin-right:30px; padding-bottom:15px')
+									#modal_introduce.text_gray(style='display:inline-block; font-size:12px;')  누구보다 빠르게 남들보다 다르게 색다르게 배달을 완료하는 춤추는 방랑자 윰쓰입니다! 
+								//- div(style='')
+								//- 	img(src='')
+								//- 	| 이메일주소 인증 완료 
+								//- 	img(src='')
+								//- 	| 전화번호 인증 완료 
+								div(style='border-top:1px solid gray')
+									div.text_blod(style='text-align:initial; padding:5px') 항공권
+									div(style=' font-size:16px;')
+										#lets_go1(style='padding:10px;')
+											div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
+												span.glyphicon.glyphicon-map-marker(style='float:left;') 
+												div#lets_go1_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px; ') 한국 
+												span.glyphicon.glyphicon-arrow-right
+												div#lets_go1_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
+													span.glyphicon.glyphicon-map-marker
+											div.text_size_nomal(style=' background-color:white; padding:5px;')
+												div#lets_go1_start_date(style='display:inline-block; float:left') 2016.11.21 
+												div#lets_go1_arrive_date(style='display:inline; float:right;') 2016.11.21 
+										#lets_go2(style='padding:10px; margin-top:10px;')
+											div.text_blod(style='background-color:white; border-bottom:solid gray 1px; padding:5px;')
+												span.glyphicon.glyphicon-map-marker(style='float:left;')
+												div#lets_go2_start.text_size1(style='display:inline-block; float:left; position:relative; top:-5px; left:5px;') 한국 
+												span.glyphicon.glyphicon-arrow-right
+												div#lets_go2_arrive.text_size1(style='display:inline-block; float:right; position:relative; top:-5px;') 한국 
+													span.glyphicon.glyphicon-map-marker
+											div.text_size_nomal(style=' background-color:white; padding:5px;')
+												div#lets_go2_start_date(style='display:inline-block; float:left') 2016.11.21 
+												div#lets_go2_arrive_date(style='display:inline; float:right;') 2016.11.21 
+								div(style='background-color:white; margin-top:10px ;')
+									div.text_blod(style='text-align:initial; padding:5px; margin-top:15px;') 가격한도
+										div(style='background-color:white; margin-top:10px; position:relative; height:50px')
+											div.text_gray(style='position:absolute;') 0원
+											div#limit_price.text_gray(style='position:absolute; right:0px') 100원
+											.text-center.progress(style='height:10px')
+												.progress-bar(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style='width:70%')
+											// 현재가격
+											div#cal_price.text_blue(style='position:absolute; left:70%; top:40px') 70원
+								div(style='margin-top:30px;')
+									button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+									button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+										span.glyphicon.glyphicon-ok-circle
+										| &nbsp여행자 선택
+										
+				#selet_nation_modal.modal.modal-center.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true' style='margin-top:250px')
+					.modal-dialog.modal-center.modal_size
+						.modal-content
+							.modal-body(style='text-align:center; ')
+								.row
+									button.close(type='button', data-dismiss='modal' style='margin-right:10px;')
+										span(aria-hidden='true') ×
+										span.sr-only Close
+								div()
+									select#select_nation1.selectpicker.show-menu-arrow
+										option(value='none' style='font-weight:bold') 지역
+										option(value='Asia') 아시아
+										option(value='SoutheastAsia') 동남아
+										option(value='America') 아메리카
+										option(value='Europe') 유럽
+										option(value='Africa') 아프리카
+										option(value='Oceania') 오세아니아
+									select#select_nation2.selectpicker(width='100px' style='width:100px; text-align:center;')
+									select#select_nation3.selectpicker(width='100px' style='width:100px; text-align:center;')
+									
+								div(style='margin-top:30px;')
+									button.btn.btn-default(type='button' style='width:100px; height:50px; border-radius:25px;' data-dismiss='modal') 취소
+									button#modal_selet_travel.btn.btn-default.background_blue.text_blod(type='button' style='width:140px; height:50px; border-radius:25px; color:white;')
+										span.glyphicon.glyphicon-ok-circle
+										| &nbsp국가선택
+
 
 block scripts
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
 	script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-	script(type='text/javascript', src='myjs.js')
-	link(href='library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
-	script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
-	script(src='library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
-	script(src='library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
-	script(src='library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js')
+	script(type='text/javascript', src='/myjs.js')
+	link(href='/library/bootstrap-fileinput-4.3.5/css/fileinput.min.css', media='all', rel='stylesheet', type='text/css')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/canvas-to-blob.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/sortable.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/plugins/purify.min.js', type='text/javascript')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/fileinput.min.js')
+	script(src='/library/bootstrap-fileinput-4.3.5/themes/fa/theme.js')
+	script(src='/library/bootstrap-fileinput-4.3.5/js/locales/LANG.js')
+	script(type='text/javascript', src='/bower_components/moment/min/moment.min.js')
+	script(type='text/javascript', src='/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
 	script(type='text/javascript').
+		function select_nation(){
+			$('#selet_nation_modal').modal();
+		}
+		
+		$('.selectpicker').selectpicker({
+			width: 140
+		});
+		
+		$('#select_nation2').selectpicker('hide');
+		
+		$('#select_nation1').on('change', function(){
+			//- 여기가 클릭했을때 받는값
+			a = $(this).find("option:selected").val();
+			if( a == 'Asia' )
+				$('#select_nation2').html('<option value="KR"> 한국 </option><option value="JP"> 일본 </option><option value="CN"> 중국 </option><option value="HK"> 홍콩</option><option value="MO"> 마카오</option><option value="MN"> 몽골</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'SoutheastAsia')
+				$('#select_nation2').html('<option value="TH"> 태국(타이) </option><option value="VN"> 베트남 </option><option value="la"> 라오스 </option><option value="SG"> 싱가포르</option><option value="PH"> 필리핀</option><option value="KH"> 캄보디아</option><option value="TW"> 대만</option><option value="IN"> 인도</option><option value="ID"> 인도네시아 </option><option value="MY"> 말레이시아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'America')
+				$('#select_nation2').html('<option value="US"> 미국 </option><option value="CA"> 캐나다 </option><option value="AR"> 아르헨티나 </option><option value="MX"> 멕시코</option><option value="PE"> 페루</option><option value="CL"> 칠레</option><option value="BO"> 볼리비아</option><option value="CU"> 쿠바</option><option value="BR"> 브라질</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'Europe')
+				$('#select_nation2').html('<option value="FR"> 프랑스 </option><option value="GB"> 영국 </option><option value="IT"> 이탈리아 </option><option value="ES"> 스페인</option><option value="DE"> 독일</option><option value="CH"> 스위스</option><option value="CZ"> 체코</option><option value="AT"> 오스트리아</option><option value="NL"> 네덜란드</option><option value="PT"> 포르투갈</option><option value="TR"> 터키</option><option value="HR"> 크로아티아</option><option value="IS"> 아이슬란드</option><option value="HU"> 헝가리</option><option value="RU"> 러시아</option><option value="GR"> 그리스</option><option value="SE"> 스웨덴</option><option value="BE"> 벨기에</option><option value="PL"> 폴란드</option><option value="IE"> 아일랜드</option><option value="NO"> 노르웨이</option><option value="BG"> 불가리아</option><option value="RO"> 루마니아</option><option value="DK"> 덴마크</option><option value="MC"> 모나코</option><option value="LU"> 룩셈부르크</option><option value="SI"> 슬로베니아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else if (a == 'Africa')
+				$('#select_nation2').html('<option value="MA"> 모로코 </option><option value="TZ"> 탄자니아 </option><option value="ZA"> 남아프리카공화국 </option><option value="EG"> 이집트</option><option value="NA"> 나미비아</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');		
+			else if (a == 'Oceania')
+				$('#select_nation2').html('<option value="AU"> 호주 </option><option value="NZ"> 뉴질랜드 </option><option value="GU"> 괌 </option><option value="MP"> 사이판</option>')
+				.selectpicker('refresh')
+				.selectpicker('show');
+			else
+				$('#select_nation2').selectpicker('hide');
+		});
+		$('#select_nation2').on('change', function(){
+			//- 여기가 클릭했을때 받는값
+			b = $(this).find("option:selected").val();
+			alert(b);			
+		});
+
+		
 		//메뉴창
 		window.onload = function(){
-			$("#avatar-2").fileinput({
-			overwriteInitial: false,
-			maxFileSize: 1500,
-			showClose: false,
-			showCaption: false,
-			showBrowse: false,
-			browseOnZoneClick: true,
-			removeLabel: '',
-			removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
-			removeTitle: 'Cancel or reset changes',
-			elErrorContainer: '#kv-avatar-errors-2',
-			msgErrorClass: 'alert alert-block alert-danger',
-			defaultPreviewContent: '<img src="./p/1.jpg" alt="Your Avatar" style="width:100%; height:180px"><h6 class="text-muted">Click to select</h6>',
-			layoutTemplates: {main2: '{preview} ' +  ' {remove}'},
-			allowedFileExtensions: ["jpg", "png", "gif"]
+			$("#input-image-2").fileinput({
+					uploadUrl: "/site/image-upload",
+					overwriteInitial: false,
+					uploadAsync: false,
+					maxFileSize: 1500,
+					showClose: false,
+					showUpload: false,
+					browseOnZoneClick: true,
+					showCaption: false,
+					removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+			    allowedFileExtensions: ["jpg", "png", "gif"],
+					defaultPreviewContent: '<img src="/p/1.jpg" alt="Your Avatar" style="width:100%; height:180px"><h6 class="text-muted">Click to select</h6>',
+					layoutTemplates: {actions: '{delete}'},
+			    maxImageHeight: 150,
+			    maxFileCount: 1,
+			    resizeImage: true
+			//- }).on('filepreupload', function() {
+			//-     $('#kv-success-box').html('');
+			//- }).on('fileuploaded', function(event, data) {
+			//-     $('#kv-success-box').append(data.response.link);
+			//-     $('#kv-success-modal').modal('show');
 			});
+
+			$(function () {
+				$('#end_datetimepicker1').datetimepicker();
+			});
+			
 		}

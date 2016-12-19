@@ -1,5 +1,7 @@
 var express = require('express');
+
 var app = express();
+
 app.locals.pretty = true;
 app.set('view engine', 'jade');
 app.set('views', './views');
@@ -21,8 +23,8 @@ app.get('/travel_reg', function(req, res){
   res.render('travel_reg', {time:Date(), title:'Jade'});
 })
 
-app.get('/travel_reg2', function(req, res){
-  res.render('travel_reg2', {time:Date(), title:'Jade'});
+app.get('/test', function(req, res){
+  res.render('test', {time:Date(), title:'Jade'});
 })
 
 app.get('/request_reg', function(req, res){
